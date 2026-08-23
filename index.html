@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Tutor</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .splash-screen {
+            width: 360px;
+            height: 780px;
+            background: #dce1f1;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            padding-top: 70px;
+        }
+
+        /* Robot Icon */
+        .robot {
+            font-size: 38px;
+            margin-bottom: 30px;
+        }
+
+        /* Main Heading */
+        h1 {
+            color: #16b8aa;
+            font-size: 34px;
+            margin-bottom: 28px;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            color: #6f7482;
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Description */
+        .description {
+            color: #a2a6b0;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Get Started Button */
+        .start-button {
+            width: 237px;
+            height: 46px;
+
+            margin-top: 110px;
+
+            border: none;
+            border-radius: 14px;
+
+            background: #16b8aa;
+            color: white;
+
+            font-size: 22px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        /* Button Hover */
+        .start-button:hover {
+            background: #119e93;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Splash Screen -->
+    <div class="splash-screen">
+
+        <!-- Robot -->
+        <div class="robot">
+            🤖
+        </div>
+
+        <!-- Title -->
+        <h1>
+            AI Tutor
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="subtitle">
+            Learn in Your Language
+        </p>
+
+        <!-- Description -->
+        <p class="description">
+            AI Learning for Rural Students
+        </p>
+
+        <!-- Get Started Button -->
+        <button
+            class="start-button"
+            onclick="window.location.href='language.html'">
+
+            Get Started
+
+        </button>
+
+    </div>
+
+</body>
+</html>
