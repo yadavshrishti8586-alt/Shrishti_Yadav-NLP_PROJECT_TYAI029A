@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>My Progress - AI Tutor</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #222;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+
+        /* ================= APP ================= */
+
+        .app {
+
+            width: 390px;
+
+            min-height: 844px;
+
+            background: #faf5ff;
+
+            position: relative;
+
+            padding: 28px 20px 90px;
+
+            overflow: hidden;
+
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .back {
+
+            width: 35px;
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+            color: #20283a;
+
+        }
+
+
+        .back:hover {
+
+            color: #3333ff;
+
+        }
+
+
+        .title {
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            color: #20283a;
+
+        }
+
+
+        .profile-icon {
+
+            width: 35px;
+
+            font-size: 25px;
+
+            text-align: right;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ================= GREETING ================= */
+
+        .greeting {
+
+            text-align: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .greeting h2 {
+
+            font-size: 20px;
+
+            font-weight: normal;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .greeting p {
+
+            font-size: 16px;
+
+        }
+
+
+        /* ================= OVERALL PROGRESS ================= */
+
+        .progress-section {
+
+            text-align: center;
+
+        }
+
+
+        .progress-title {
+
+            font-size: 20px;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .progress-container {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+        }
+
+
+        .progress-bar {
+
+            width: 100%;
+
+            height: 10px;
+
+            background: #d8d8d8;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+        }
+
+
+        .progress-fill {
+
+            width: 0%;
+
+            height: 100%;
+
+            background: #19b7ad;
+
+            border-radius: 10px;
+
+            transition: width 0.5s ease;
+
+        }
+
+
+        .progress-percent {
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            min-width: 45px;
+
+        }
+
+
+        .completed {
+
+            color: #707789;
+
+            font-size: 18px;
+
+            margin-top: 22px;
+
+        }
+
+
+        /* ================= FOUR CARDS ================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px;
+
+            margin: 28px 5px 0;
+
+        }
+
+
+        .card {
+
+            height: 90px;
+
+            border-radius: 15px;
+
+            padding: 12px 10px;
+
+            font-size: 14px;
+
+            line-height: 18px;
+
+            cursor: pointer;
+
+            user-select: none;
+
+            transition:
+                transform 0.15s ease,
+                opacity 0.15s ease;
+
+        }
+
+
+        .card:hover {
+
+            transform: scale(1.03);
+
+            opacity: 0.9;
+
+        }
+
+
+        .card:active {
+
+            transform: scale(0.97);
+
+        }
+
+
+        .pink {
+
+            background: #ffb9bd;
+
+        }
+
+
+        .blue {
+
+            background: #57d8e9;
+
+        }
+
+
+        .yellow {
+
+            background: #ffe47c;
+
+        }
+
+
+        .green {
+
+            background: #94e82a;
+
+        }
+
+
+        .card-icon {
+
+            font-size: 20px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .card-number {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #20283a;
+
+        }
+
+
+        /* ================= BADGES ================= */
+
+        .badges {
+
+            margin-top: 38px;
+
+            margin-left: 18px;
+
+        }
+
+
+        .badges h2 {
+
+            color: #312dff;
+
+            font-size: 20px;
+
+            font-weight: normal;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .badge-icons {
+
+            display: flex;
+
+            gap: 18px;
+
+            font-size: 20px;
+
+        }
+
+
+        /* ================= REPORT ================= */
+
+        .report-btn {
+
+            width: 292px;
+
+            height: 46px;
+
+            display: block;
+
+            margin: 30px auto 0;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #384256;
+
+            color: white;
+
+            font-size: 17px;
+
+            cursor: pointer;
+
+        }
+
+
+        .report-btn:hover {
+
+            background: #293143;
+
+        }
+
+
+        /* ================= BOTTOM NAV ================= */
+
+        .bottom-nav {
+
+            position: absolute;
+
+            bottom: 15px;
+
+            left: 0;
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            text-align: center;
+
+        }
+
+
+        .nav-item {
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+        }
+
+
+        .nav-icon {
+
+            display: block;
+
+            font-size: 20px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .nav-item:hover {
+
+            color: #3333ff;
+
+        }
+
+
+        /* ================= DESKTOP ================= */
+
+        @media (min-width: 600px) {
+
+            .app {
+
+                box-shadow:
+                    0 0 30px rgba(0, 0, 0, 0.4);
+
+                border-radius: 5px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+
+        <div
+            class="back"
+            onclick="goBack()">
+
+            ←
+
+        </div>
+
+
+        <div class="title">
+
+            My Progress
+
+        </div>
+
+
+        <div
+            class="profile-icon"
+            onclick="openProfile()">
+
+            👤
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= GREETING ================= -->
+
+    <div class="greeting">
+
+
+        <h2 id="studentGreeting">
+
+            Hello, Student 👋
+
+        </h2>
+
+
+        <p>
+
+            Keep learning every day!
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- ================= OVERALL PROGRESS ================= -->
+
+    <div class="progress-section">
+
+
+        <div class="progress-title">
+
+            Overall Progress
+
+        </div>
+
+
+        <div class="progress-container">
+
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    id="progressFill">
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="progress-percent"
+                id="progressPercent">
+
+                0%
+
+            </div>
+
+
+        </div>
+
+
+        <div
+            class="completed"
+            id="completedText">
+
+            0% Learning Completed
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= FOUR CARDS ================= -->
+
+    <div class="cards">
+
+
+        <!-- ================= LESSONS ================= -->
+
+        <div
+            class="card pink"
+            onclick="openLessons()">
+
+
+            <div class="card-icon">
+
+                📚
+
+            </div>
+
+
+            <div
+                class="card-number"
+                id="lessonCount">
+
+                0 / 12
+
+            </div>
+
+
+            <div>
+
+                Lessons Completed
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= QUIZ ================= -->
+
+        <div
+            class="card blue"
+            onclick="openQuizResult()">
+
+
+            <div class="card-icon">
+
+                📝
+
+            </div>
+
+
+            <div
+                class="card-number"
+                id="quizScore">
+
+                0 / 10
+
+            </div>
+
+
+            <div>
+
+                Quiz Score
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= STUDY TIME ================= -->
+
+        <div
+            class="card yellow"
+            onclick="openStudyTime()">
+
+
+            <div class="card-icon">
+
+                ⏱️
+
+            </div>
+
+
+            <div
+                class="card-number"
+                id="studyTime">
+
+                0 hrs
+
+            </div>
+
+
+            <div>
+
+                Study Time
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= LEARNING STREAK ================= -->
+
+        <div
+            class="card green"
+            onclick="openStreak()">
+
+
+            <div class="card-icon">
+
+                🔥
+
+            </div>
+
+
+            <div
+                class="card-number"
+                id="streak">
+
+                0 Days
+
+            </div>
+
+
+            <div>
+
+                Learning Streak
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= BADGES ================= -->
+
+    <div class="badges">
+
+
+        <h2>
+
+            🏆 Badges Earned
+
+        </h2>
+
+
+        <div class="badge-icons">
+
+            <span>🥇</span>
+
+            <span>🌟</span>
+
+            <span>📖</span>
+
+            <span>🎯</span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= REPORT ================= -->
+
+    <button
+        class="report-btn"
+        onclick="viewReport()">
+
+        View Detailed Report
+
+    </button>
+
+
+
+    <!-- ================= BOTTOM NAVIGATION ================= -->
+
+    <div class="bottom-nav">
+
+
+        <div
+            class="nav-item"
+            onclick="goHome()">
+
+
+            <span class="nav-icon">
+
+                🏠
+
+            </span>
+
+
+            Home
+
+
+        </div>
+
+
+
+        <div
+            class="nav-item"
+            onclick="openTutor()">
+
+
+            <span class="nav-icon">
+
+                🤖
+
+            </span>
+
+
+            Tutor
+
+
+        </div>
+
+
+
+        <div
+            class="nav-item"
+            onclick="openScanner()">
+
+
+            <span class="nav-icon">
+
+                📷
+
+            </span>
+
+
+            Scanner
+
+
+        </div>
+
+
+
+        <div
+            class="nav-item"
+            onclick="openProfile()">
+
+
+            <span class="nav-icon">
+
+                👤
+
+            </span>
+
+
+            Profile
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+const TOTAL_LESSONS = 12;
+
+const TOTAL_QUIZ_QUESTIONS = 10;
+
+
+/* =====================================================
+   GET STUDENT NAME
+===================================================== */
+
+function getStudentName() {
+
+    const possibleKeys = [
+
+        "studentName",
+        "name",
+        "userName",
+        "profileName"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < possibleKeys.length;
+        i++
+    ) {
+
+        const value =
+            localStorage.getItem(
+                possibleKeys[i]
+            );
+
+
+        if (
+            value &&
+            value.trim() !== ""
+        ) {
+
+            return value.trim();
+
+        }
+
+    }
+
+
+    return "Student";
+
+}
+
+
+/* =====================================================
+   GET COMPLETED LESSONS
+===================================================== */
+
+function getCompletedLessons() {
+
+    let count = 0;
+
+
+    for (
+        let i = 0;
+        i < TOTAL_LESSONS;
+        i++
+    ) {
+
+        const lessonStatus =
+            localStorage.getItem(
+                "lesson_" + i
+            );
+
+
+        if (
+            lessonStatus ===
+            "completed"
+        ) {
+
+            count++;
+
+        }
+
+    }
+
+
+    return count;
+
+}
+
+
+/* =====================================================
+   GET QUIZ SCORE
+===================================================== */
+
+function getQuizScore() {
+
+    let score =
+        Number(
+            localStorage.getItem(
+                "quizScore"
+            )
+        );
+
+
+    if (
+        isNaN(score) ||
+        score < 0
+    ) {
+
+        score = 0;
+
+    }
+
+
+    if (
+        score >
+        TOTAL_QUIZ_QUESTIONS
+    ) {
+
+        score =
+            TOTAL_QUIZ_QUESTIONS;
+
+    }
+
+
+    return score;
+
+}
+
+
+/* =====================================================
+   GET STUDY TIME
+===================================================== */
+
+function getStudyTime() {
+
+    const value =
+        Number(
+            localStorage.getItem(
+                "studyTime"
+            )
+        );
+
+
+    if (
+        isNaN(value) ||
+        value < 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =====================================================
+   GET LEARNING STREAK
+===================================================== */
+
+function getLearningStreak() {
+
+    const value =
+        Number(
+            localStorage.getItem(
+                "learningStreak"
+            )
+        );
+
+
+    if (
+        isNaN(value) ||
+        value < 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =====================================================
+   UPDATE PROGRESS
+===================================================== */
+
+function updateProgress() {
+
+
+    /* ================= STUDENT NAME ================= */
+
+    const studentName =
+        getStudentName();
+
+
+    document.getElementById(
+        "studentGreeting"
+    ).innerText =
+        "Hello, " +
+        studentName +
+        " 👋";
+
+
+    /* ================= LESSONS ================= */
+
+    const completedLessons =
+        getCompletedLessons();
+
+
+    /*
+       Lesson percentage.
+
+       Example:
+       6 / 12 = 50%
+    */
+
+    const lessonPercentage =
+        (
+            completedLessons /
+            TOTAL_LESSONS
+        ) * 100;
+
+
+    /* ================= QUIZ ================= */
+
+    const quizScore =
+        getQuizScore();
+
+
+    const quizPercentage =
+        (
+            quizScore /
+            TOTAL_QUIZ_QUESTIONS
+        ) * 100;
+
+
+    /* ================= OVERALL ================= */
+
+    /*
+       Overall Progress is the
+       average of lesson progress
+       and quiz progress.
+    */
+
+    const overallProgress =
+        Math.round(
+            (
+                lessonPercentage +
+                quizPercentage
+            ) / 2
+        );
+
+
+    /* ================= PROGRESS BAR ================= */
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        overallProgress + "%";
+
+
+    /* ================= PERCENTAGE ================= */
+
+    document.getElementById(
+        "progressPercent"
+    ).innerText =
+        overallProgress + "%";
+
+
+    /* ================= COMPLETED TEXT ================= */
+
+    document.getElementById(
+        "completedText"
+    ).innerText =
+        overallProgress +
+        "% Learning Completed";
+
+
+    /* ================= LESSON CARD ================= */
+
+    document.getElementById(
+        "lessonCount"
+    ).innerText =
+        completedLessons +
+        " / " +
+        TOTAL_LESSONS;
+
+
+    /*
+       Also save the latest count
+       so other pages can use it.
+    */
+
+    localStorage.setItem(
+        "lessonsCompleted",
+        completedLessons
+    );
+
+
+    /* ================= QUIZ CARD ================= */
+
+    document.getElementById(
+        "quizScore"
+    ).innerText =
+        quizScore +
+        " / " +
+        TOTAL_QUIZ_QUESTIONS;
+
+
+    /* ================= STUDY TIME ================= */
+
+    const studyTime =
+        getStudyTime();
+
+
+    document.getElementById(
+        "studyTime"
+    ).innerText =
+        studyTime +
+        " hrs";
+
+
+    /* ================= STREAK ================= */
+
+    const streak =
+        getLearningStreak();
+
+
+    document.getElementById(
+        "streak"
+    ).innerText =
+        streak +
+        " Days";
+
+}
+
+
+/* =====================================================
+   PAGE CONNECTIONS
+===================================================== */
+
+
+/* ================= LESSONS ================= */
+
+function openLessons() {
+
+    /*
+       IMPORTANT:
+       Your file is named lesson.html,
+       not lessons.html.
+    */
+
+    window.location.href =
+        "lesson.html";
+
+}
+
+
+/* ================= QUIZ ================= */
+
+function openQuizResult() {
+
+    window.location.href =
+        "result.html";
+
+}
+
+
+/* ================= STUDY TIME ================= */
+
+function openStudyTime() {
+
+    window.location.href =
+        "study.html";
+
+}
+
+
+/* ================= STREAK ================= */
+
+function openStreak() {
+
+    window.location.href =
+        "streak.html";
+
+}
+
+
+/* ================= DETAILED REPORT ================= */
+
+function viewReport() {
+
+    window.location.href =
+        "result.html";
+
+}
+
+
+/* =====================================================
+   BOTTOM NAVIGATION
+===================================================== */
+
+function goBack() {
+
+    window.location.href =
+        "home.html";
+
+}
+
+
+function goHome() {
+
+    window.location.href =
+        "home.html";
+
+}
+
+
+function openTutor() {
+
+    window.location.href =
+        "tutor.html";
+
+}
+
+
+function openScanner() {
+
+    window.location.href =
+        "scanner.html";
+
+}
+
+
+function openProfile() {
+
+    window.location.href =
+        "profile.html";
+
+}
+
+
+/* =====================================================
+   INITIAL PAGE LOAD
+===================================================== */
+
+updateProgress();
+
+
+/* =====================================================
+   UPDATE WHEN RETURNING TO PAGE
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    function () {
+
+        updateProgress();
+
+    }
+);
+
+
+/* =====================================================
+   UPDATE WHEN TAB BECOMES ACTIVE
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    function () {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            updateProgress();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   UPDATE WHEN STORAGE CHANGES
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function () {
+
+        updateProgress();
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html> 
