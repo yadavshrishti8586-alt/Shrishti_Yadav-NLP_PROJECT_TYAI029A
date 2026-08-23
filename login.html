@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tutor - Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #202020;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-screen {
+            width: 360px;
+            height: 780px;
+            background: #aeb6df;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 55px;
+        }
+
+        .welcome {
+            font-size: 20px;
+            color: #111;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 25px;
+            font-weight: normal;
+            color: #111;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 17px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #111;
+            margin-bottom: 22px;
+        }
+
+        input {
+            width: 186px;
+            height: 33px;
+            border: none;
+            background: #f1f2f5;
+            text-align: center;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .password-group {
+            margin-top: 2px;
+        }
+
+        .forgot {
+            width: 230px;
+            text-align: right;
+            margin-top: 8px;
+            margin-bottom: 30px;
+        }
+
+        .forgot a {
+            color: #1554ad;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .login-button {
+            width: 115px;
+            height: 44px;
+            border: none;
+            border-radius: 11px;
+            background: #72a4e9;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background: #5f91d8;
+        }
+
+        .register-text {
+            margin-top: 48px;
+            font-size: 15px;
+            color: #111;
+        }
+
+        .register-link {
+            margin-top: 27px;
+            color: #3d8cf5;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .error {
+            color: #b00020;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-screen">
+
+        <div class="welcome">
+            Welcome Back 👋
+        </div>
+
+        <h1>
+            Login to continue learning
+        </h1>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+            >
+        </div>
+
+        <div class="form-group password-group">
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="********"
+            >
+        </div>
+
+        <div class="forgot">
+            <a href="#" onclick="forgotPassword()">
+                Forgot Password?
+            </a>
+        </div>
+
+        <button class="login-button" onclick="login()">
+            Login
+        </button>
+
+        <p class="error" id="error">
+            Please enter email and password.
+        </p>
+
+        <p class="register-text">
+            Don't have an account?
+        </p>
+
+        <a class="register-link" href="register.html">
+            Register
+        </a>
+
+    </div>
+
+    <script>
+
+        function login() {
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const error = document.getElementById("error");
+
+            if (email === "" || password === "") {
+
+                error.style.display = "block";
+
+                return;
+            }
+
+            error.style.display = "none";
+
+            // For now, move to Home screen
+            window.location.href = "home.html";
+        }
+
+        function forgotPassword() {
+
+            alert("Password recovery will be added later.");
+
+        }
+
+    </script>
+
+</body>
+</html>
