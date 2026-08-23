@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Language</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #202020;
+            font-family: Arial, sans-serif;
+        }
+
+        .language-screen {
+            width: 360px;
+            height: 780px;
+            background: #f8f9fb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 25px;
+        }
+
+        .globe {
+            font-size: 35px;
+            margin-bottom: 28px;
+        }
+
+        h1 {
+            color: #263143;
+            font-size: 30px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #70798a;
+            font-size: 20px;
+            margin-bottom: 45px;
+            text-align: center;
+        }
+
+        .language-button {
+            width: 230px;
+            height: 48px;
+            border: none;
+            border-radius: 13px;
+            background: #16b8aa;
+            color: white;
+            font-size: 22px;
+            margin-bottom: 48px;
+            cursor: pointer;
+        }
+
+        .language-button:hover {
+            background: #119e93;
+        }
+
+        .language-button.selected {
+            background: #0d8f85;
+        }
+
+        .continue-button {
+            width: 257px;
+            height: 50px;
+            border: none;
+            border-radius: 13px;
+            background: #16b8aa;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            margin-top: 0;
+        }
+
+        .continue-button:hover {
+            background: #119e93;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="language-screen">
+
+        <div class="globe">🌐</div>
+
+        <h1>Choose Your Language</h1>
+
+        <p class="subtitle">
+            Select your preferred language
+        </p>
+
+        <button class="language-button" onclick="selectLanguage(this, 'English')">
+            English
+        </button>
+
+        <button class="language-button" onclick="selectLanguage(this, 'Hindi')">
+            Hindi
+        </button>
+
+        <button class="language-button" onclick="selectLanguage(this, 'Marathi')">
+            Marathi
+        </button>
+
+        <button class="continue-button" onclick="continueToLogin()">
+            Continue
+        </button>
+
+    </div>
+
+    <script>
+        let selectedLanguage = "";
+
+        function selectLanguage(button, language) {
+
+            selectedLanguage = language;
+
+            // Remove selection from all buttons
+            document.querySelectorAll(".language-button")
+                .forEach(btn => btn.classList.remove("selected"));
+
+            // Highlight selected language
+            button.classList.add("selected");
+
+            console.log("Selected language:", language);
+        }
+
+        function continueToLogin() {
+
+            if (selectedLanguage === "") {
+                alert("Please select a language first.");
+                return;
+            }
+
+            // Save language
+            localStorage.setItem("language", selectedLanguage);
+
+            // Next screen
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>
