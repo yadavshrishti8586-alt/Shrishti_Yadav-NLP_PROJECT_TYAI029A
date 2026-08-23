@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AI Tutor - Quiz Result</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #202020;
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        .result-screen {
+
+            width: 360px;
+
+            height: 780px;
+
+            background: #effff5;
+
+            position: relative;
+
+            padding: 25px 20px;
+
+            text-align: center;
+
+            overflow: hidden;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .back-button {
+
+            width: 35px;
+
+            height: 35px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            font-size: 28px;
+
+            cursor: pointer;
+
+            border-radius: 50%;
+        }
+
+
+        .back-button:hover {
+
+            background: #dff5eb;
+        }
+
+
+        .header h1 {
+
+            font-size: 22px;
+
+            color: #273143;
+        }
+
+
+        .profile {
+
+            font-size: 21px;
+
+            cursor: pointer;
+        }
+
+
+        /* ================= TROPHY ================= */
+
+        .trophy {
+
+            font-size: 40px;
+
+            margin-top: 30px;
+        }
+
+
+        /* ================= CONGRATULATIONS ================= */
+
+        .congratulations {
+
+            color: #244596;
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+            margin-top: 12px;
+        }
+
+
+        /* ================= SCORE ================= */
+
+        .score {
+
+            color: #10b99c;
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            margin-top: 27px;
+        }
+
+
+        /* ================= PERCENTAGE ================= */
+
+        .percentage {
+
+            color: #6d7785;
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+            margin-top: 18px;
+        }
+
+
+        /* ================= SUMMARY ================= */
+
+        .summary {
+
+            width: 291px;
+
+            min-height: 81px;
+
+            background: #f7f7f7;
+
+            border-radius: 15px;
+
+            margin: 26px auto 0;
+
+            padding: 18px;
+
+            text-align: left;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+        }
+
+
+        /* ================= PERFORMANCE ================= */
+
+        .performance {
+
+            color: #10b99c;
+
+            font-size: 18px;
+
+            margin-top: 25px;
+        }
+
+
+        /* ================= LEARNING STATUS ================= */
+
+        .learning-status {
+
+            width: 291px;
+
+            margin: 12px auto 0;
+
+            padding: 9px;
+
+            border-radius: 10px;
+
+            background: #dff8ef;
+
+            color: #168f79;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .result-button {
+
+            width: 291px;
+
+            height: 47px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+
+        .retake {
+
+            background: #16b8aa;
+
+            color: white;
+
+            margin-top: 20px;
+        }
+
+
+        .back-home {
+
+            background: #9ca6b5;
+
+            color: white;
+
+            margin-top: 12px;
+        }
+
+
+        .progress-button {
+
+            background: #384256;
+
+            color: white;
+
+            margin-top: 12px;
+        }
+
+
+        .result-button:hover {
+
+            opacity: 0.9;
+        }
+
+
+        /* ================= BOTTOM NAV ================= */
+
+        .bottom-nav {
+
+            position: absolute;
+
+            bottom: 20px;
+
+            left: 25px;
+
+            right: 25px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            text-align: center;
+        }
+
+
+        .nav-item {
+
+            font-size: 14px;
+
+            cursor: pointer;
+        }
+
+
+        .nav-icon {
+
+            display: block;
+
+            font-size: 14px;
+
+            margin-bottom: 5px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="result-screen">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+
+        <div
+            class="back-button"
+            onclick="goBack()">
+
+            ←
+
+        </div>
+
+
+        <h1>
+
+            Quiz Result
+
+        </h1>
+
+
+        <div
+            class="profile"
+            onclick="goProfile()">
+
+            👤
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= TROPHY ================= -->
+
+    <div class="trophy">
+
+        🏆
+
+    </div>
+
+
+
+    <!-- ================= CONGRATULATIONS ================= -->
+
+    <div class="congratulations">
+
+        Congratulations!
+
+    </div>
+
+
+
+    <!-- ================= SCORE ================= -->
+
+    <div
+        class="score"
+        id="score">
+
+        0 / 10
+
+    </div>
+
+
+
+    <!-- ================= PERCENTAGE ================= -->
+
+    <div
+        class="percentage"
+        id="percentage">
+
+        0% Score
+
+    </div>
+
+
+
+    <!-- ================= SUMMARY ================= -->
+
+    <div class="summary">
+
+
+        Correct Answers :
+
+        <span id="correctAnswers">
+
+            0
+
+        </span>
+
+
+        <br>
+
+
+        Wrong Answers :
+
+        <span id="wrongAnswers">
+
+            0
+
+        </span>
+
+
+    </div>
+
+
+
+    <!-- ================= PERFORMANCE ================= -->
+
+    <div
+        class="performance"
+        id="performance">
+
+        Keep learning! 📚
+
+    </div>
+
+
+
+    <!-- ================= LEARNING STATUS ================= -->
+
+    <div
+        class="learning-status"
+        id="learningStatus">
+
+        📚 Today's learning recorded!
+
+    </div>
+
+
+
+    <!-- ================= RETAKE ================= -->
+
+    <button
+        class="result-button retake"
+        onclick="retakeQuiz()">
+
+        🔄 Retake Quiz
+
+    </button>
+
+
+
+    <!-- ================= PROGRESS ================= -->
+
+    <button
+        class="result-button progress-button"
+        onclick="goProgress()">
+
+        📊 View Progress
+
+    </button>
+
+
+
+    <!-- ================= HOME ================= -->
+
+    <button
+        class="result-button back-home"
+        onclick="goHome()">
+
+        🏠 Back to Home
+
+    </button>
+
+
+
+    <!-- ================= BOTTOM NAV ================= -->
+
+    <div class="bottom-nav">
+
+
+        <div
+            class="nav-item"
+            onclick="goHome()">
+
+            <span class="nav-icon">
+
+                🏠
+
+            </span>
+
+            Home
+
+        </div>
+
+
+        <div
+            class="nav-item"
+            onclick="goTutor()">
+
+            <span class="nav-icon">
+
+                🤖
+
+            </span>
+
+            Tutor
+
+        </div>
+
+
+        <div
+            class="nav-item"
+            onclick="goScanner()">
+
+            <span class="nav-icon">
+
+                📷
+
+            </span>
+
+            Scanner
+
+        </div>
+
+
+        <div
+            class="nav-item"
+            onclick="goProfile()">
+
+            <span class="nav-icon">
+
+                👤
+
+            </span>
+
+            Profile
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   GET QUIZ RESULT
+===================================================== */
+
+const score =
+    Number(
+        localStorage.getItem(
+            "quizScore"
+        )
+    ) || 0;
+
+
+const total =
+    Number(
+        localStorage.getItem(
+            "quizTotal"
+        )
+    ) || 10;
+
+
+const savedPercentage =
+    localStorage.getItem(
+        "quizPercentage"
+    );
+
+
+const percentage =
+    savedPercentage !== null
+        ? Number(savedPercentage)
+        : Math.round(
+            (score / total) * 100
+        );
+
+
+
+/* =====================================================
+   SHOW SCORE
+===================================================== */
+
+document.getElementById(
+    "score"
+).innerText =
+
+    score +
+    " / " +
+    total;
+
+
+
+/* =====================================================
+   SHOW PERCENTAGE
+===================================================== */
+
+document.getElementById(
+    "percentage"
+).innerText =
+
+    percentage +
+    "% Score";
+
+
+
+/* =====================================================
+   SHOW CORRECT ANSWERS
+===================================================== */
+
+document.getElementById(
+    "correctAnswers"
+).innerText =
+
+    score;
+
+
+
+/* =====================================================
+   SHOW WRONG ANSWERS
+===================================================== */
+
+document.getElementById(
+    "wrongAnswers"
+).innerText =
+
+    total -
+    score;
+
+
+
+/* =====================================================
+   PERFORMANCE MESSAGE
+===================================================== */
+
+const performance =
+    document.getElementById(
+        "performance"
+    );
+
+
+if (percentage >= 90) {
+
+    performance.innerText =
+        "Excellent Performance! 🏆";
+
+}
+
+else if (percentage >= 75) {
+
+    performance.innerText =
+        "Very Good Performance! 🎉";
+
+}
+
+else if (percentage >= 50) {
+
+    performance.innerText =
+        "Good! Keep Practicing! 👍";
+
+}
+
+else {
+
+    performance.innerText =
+        "Keep Learning and Try Again! 📚";
+
+}
+
+
+
+/* =====================================================
+   TODAY'S DATE
+===================================================== */
+
+function getTodayKey() {
+
+    const date =
+        new Date();
+
+
+    return (
+
+        date.getFullYear() +
+
+        "-" +
+
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0") +
+
+        "-" +
+
+        String(
+            date.getDate()
+        ).padStart(2, "0")
+
+    );
+
+}
+
+
+
+/* =====================================================
+   RECORD QUIZ AS TODAY'S LEARNING
+===================================================== */
+
+function recordQuizLearning() {
+
+
+    const today =
+        getTodayKey();
+
+
+    /*
+       Check whether today's quiz
+       has already been recorded.
+    */
+
+    const recordedDate =
+        localStorage.getItem(
+            "quizLearningDate"
+        );
+
+
+    /*
+       If already recorded today,
+       do not record again.
+    */
+
+    if (
+        recordedDate === today
+    ) {
+
+        document.getElementById(
+            "learningStatus"
+        ).innerText =
+            "🔥 Today's learning already recorded!";
+
+
+        return;
+
+    }
+
+
+    /*
+       Save today's quiz completion.
+    */
+
+    localStorage.setItem(
+        "quizLearningDate",
+        today
+    );
+
+
+    localStorage.setItem(
+        "quizCompleted",
+        "true"
+    );
+
+
+    /*
+       This flag will be read by
+       streak.html.
+    */
+
+    localStorage.setItem(
+        "learningCompletedToday",
+        "true"
+    );
+
+
+    document.getElementById(
+        "learningStatus"
+    ).innerText =
+        "🔥 Today's learning recorded! Streak updated when you open Streak.";
+
+}
+
+
+
+/* =====================================================
+   RECORD QUIZ LEARNING
+===================================================== */
+
+recordQuizLearning();
+
+
+
+/* =====================================================
+   RETAKE QUIZ
+===================================================== */
+
+function retakeQuiz() {
+
+
+    /*
+       Remove only the quiz result.
+
+       Keep streak and study data.
+    */
+
+    localStorage.removeItem(
+        "quizScore"
+    );
+
+    localStorage.removeItem(
+        "quizTotal"
+    );
+
+    localStorage.removeItem(
+        "quizPercentage"
+    );
+
+
+    window.location.href =
+        "quiz.html";
+
+}
+
+
+
+/* =====================================================
+   GO TO PROGRESS
+===================================================== */
+
+function goProgress() {
+
+    window.location.href =
+        "progress.html";
+
+}
+
+
+
+/* =====================================================
+   BACK
+===================================================== */
+
+function goBack() {
+
+    window.history.back();
+
+}
+
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function goHome() {
+
+    window.location.href =
+        "home.html";
+
+}
+
+
+function goTutor() {
+
+    window.location.href =
+        "tutor.html";
+
+}
+
+
+function goScanner() {
+
+    window.location.href =
+        "scanner.html";
+
+}
+
+
+function goProfile() {
+
+    window.location.href =
+        "profile.html";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html> 
