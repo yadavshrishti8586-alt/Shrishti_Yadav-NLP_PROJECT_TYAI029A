@@ -1,0 +1,838 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Gyaan AI Tutor</title>
+
+    <!-- Navbar CSS -->
+    <!-- Home CSS -->
+    <link rel="stylesheet" href="index.css">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         NAVBAR
+    ================================================== -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+
+            <!-- Logo -->
+
+            <a href="/" class="logo">
+
+                <div class="logo-icon">
+                    ✦
+                </div>
+
+                <div class="logo-text">
+
+                    <span>GYAAN</span>
+
+                    <small>AI TUTOR</small>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- Navigation Links -->
+
+            <div class="nav-links" id="navLinks">
+
+                <a href="/" class="active">
+                    Home
+                </a>
+
+                <a href="AI Tutar.Html">
+                    AI Tutor
+                </a>
+                <a href="Study.Html">
+                    Timer
+                </a>
+
+                <a href="Quiz.Html">
+                    Quiz
+                </a>
+
+
+
+                <!-- Language Dropdown -->
+
+                <div class="language-menu"
+                    id="languageMenu">
+
+                    <button
+                        class="language-btn"
+                        id="languageBtn"
+                        type="button">
+
+                        <span>🌐</span>
+
+                        <span id="selectedLanguage">
+                            Language
+                        </span>
+
+                        <span class="arrow">
+                            ⌄
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        class="language-dropdown"
+                        id="languageDropdown">
+
+                        <a href="#"
+                            data-lang="English">
+                            🇬🇧 English
+                        </a>
+
+                        <a href="#"
+                            data-lang="Hindi">
+                            🇮🇳 हिंदी
+                        </a>
+
+                        <a href="#"
+                            data-lang="Marathi">
+                            🇮🇳 मराठी
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+
+
+            <!-- Right Side -->
+
+            <div class="nav-actions">
+
+                <a href="login.html"
+                    class="login-btn">
+
+                    Login
+
+                </a>
+
+
+                <a href="profile.html"
+                    class="profile-btn">
+
+                    <span class="profile-icon">
+                        👤
+                    </span>
+
+                    Profile
+
+                </a>
+
+            </div>
+
+
+
+            <!-- Mobile Menu -->
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button">
+
+                ☰
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ==================================================
+         HERO SECTION
+    ================================================== -->
+
+    <main>
+
+
+        <section class="hero">
+
+            <div class="hero-container">
+
+
+                <!-- Left Content -->
+
+                <div class="hero-content">
+
+
+                    <div class="hero-badge">
+
+                        <span>✦</span>
+
+                        AI-Powered Learning
+
+                    </div>
+
+
+                    <h1>
+
+                        Learn Smarter.
+                        <br>
+
+                        <span>Grow Brighter.</span>
+
+                    </h1>
+
+
+                    <p>
+
+                        Meet your personal AI Tutor —
+                        designed to make learning simple,
+                        interactive and accessible in
+                        your preferred language.
+
+                    </p>
+
+
+                    <!-- Buttons -->
+
+                    <div class="hero-buttons">
+
+                        <a href="AI Tutar.Html"
+                            class="primary-btn">
+
+                            Start Learning
+
+                            <span>→</span>
+
+                        </a>
+
+
+                        <a href="subjects.html"
+                            class="secondary-btn">
+
+                            Explore Subjects
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- Small Features -->
+
+                    <div class="hero-highlights">
+
+
+                        <div class="highlight">
+
+                            <div class="highlight-icon">
+                                🌐
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Multilingual
+                                </strong>
+
+                                <span>
+                                    Learn your way
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="highlight">
+
+                            <div class="highlight-icon">
+                                🎙
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Voice Learning
+                                </strong>
+
+                                <span>
+                                    Just speak & learn
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="highlight">
+
+                            <div class="highlight-icon">
+                                🤖
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    AI Tutor
+                                </strong>
+
+                                <span>
+                                    Instant answers
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- AI Tutor visual -->
+
+                <div class="hero-visual">
+
+                    <div class="ai-card">
+
+                        <div class="ai-card-header">
+                            <div class="ai-avatar">🤖</div>
+                            <div>
+                                <strong>AI Tutor</strong>
+                                <span><i class="online-dot"></i> Online</span>
+                            </div>
+                            <span class="visual-menu">•••</span>
+                        </div>
+
+                        <div class="chat-question">
+                            <div class="question-avatar">👋</div>
+                            <div>
+                                <small>Today</small>
+                                <p>What would you like to learn?</p>
+                            </div>
+                        </div>
+
+                        <div class="chat-answer">
+                            <div class="answer-top"><span>✦</span><strong>Personalized learning</strong></div>
+                            <p>Ask questions, practice topics and learn at your own pace.</p>
+                            <div class="answer-tags"><span>Explain a topic</span><span>Practice questions</span><span>Quiz time</span></div>
+                        </div>
+
+                        <div class="topic-preview">
+                            <strong>Explore topics</strong>
+                            <div><span>✣ Mathematics</span><span>🐍 Python</span><span>⚗ Science</span></div>
+                        </div>
+
+                        <div class="ai-input"><span>Ask your AI Tutor anything...</span><button type="button">🎙</button><button class="send-btn" type="button">↑</button></div>
+
+                    </div>
+
+                    <div class="floating-card">
+                        <div class="progress-card-heading"><span>✦</span><strong>Learning Progress</strong></div>
+                        <div class="progress-score"><strong>72%</strong><small>Keep going!</small></div>
+                        <div class="progress-track"><span></span></div>
+                        <div class="progress-card-stats"><div><strong>12</strong><small>Topics learned</small></div><div><strong>35</strong><small>Questions solved</small></div></div>
+                        <small class="progress-card-footer">Practice • Learn • Improve</small>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             FEATURES
+        ================================================== -->
+
+        <section class="features"
+            id="features">
+
+
+            <div class="section-heading">
+
+                <span>
+                    WHY GYAAN AI?
+                </span>
+
+                <h2>
+                    Learning made
+                    <strong>simple.</strong>
+                </h2>
+
+                <p>
+                    Powerful learning tools designed
+                    for every student.
+                </p>
+
+            </div>
+
+
+
+            <div class="feature-grid">
+
+
+                <a href="AI Tutar.Html"
+                    class="feature-card">
+
+                    <div class="feature-icon blue">
+                        🤖
+                    </div>
+
+                    <h3>
+                        Personal AI Tutor
+                    </h3>
+
+                    <p>
+                        Ask questions and get easy,
+                        step-by-step explanations.
+                    </p>
+
+                    <span class="card-link">
+                        Start Learning →
+                    </span>
+
+                </a>
+
+
+
+                <a href="subjects.html"
+                    class="feature-card">
+
+                    <div class="feature-icon green">
+                        📚
+                    </div>
+
+                    <h3>
+                        Multiple Subjects
+                    </h3>
+
+                    <p>
+                        Explore different subjects and
+                        learn concepts at your own pace.
+                    </p>
+
+                    <span class="card-link">
+                        View Subjects →
+                    </span>
+
+                </a>
+
+
+
+                <a href="AI Tutar.Html"
+                    class="feature-card">
+
+                    <div class="feature-icon purple">
+                        🎙
+                    </div>
+
+                    <h3>
+                        Voice Interaction
+                    </h3>
+
+                    <p>
+                        Speak naturally with your AI Tutor
+                        without needing to type.
+                    </p>
+
+                    <span class="card-link">
+                        Try Voice →
+                    </span>
+
+                </a>
+
+
+
+                <a href="#language"
+                    class="feature-card">
+
+                    <div class="feature-icon orange">
+                        🌐
+                    </div>
+
+                    <h3>
+                        Multilingual Learning
+                    </h3>
+
+                    <p>
+                        Learn comfortably in English,
+                        Hindi, Marathi and more.
+                    </p>
+
+                    <span class="card-link">
+                        Choose Language →
+                    </span>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==================================================
+             CTA
+        ================================================== -->
+
+        <section class="cta">
+
+            <div class="cta-container">
+
+                <div>
+
+                    <span>
+                        READY TO LEARN?
+                    </span>
+
+                    <h2>
+                        Your questions.
+                        <br>
+                        Our AI. Better learning.
+                    </h2>
+
+                    <p>
+                        Start your learning journey
+                        with Gyaan AI Tutor today.
+                    </p>
+
+                </div>
+
+
+                <a href="AI Tutar.Html"
+                    class="cta-btn">
+
+                    Start Learning
+
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==================================================
+         FOOTER
+    ================================================== -->
+
+    <footer class="footer">
+
+
+        <div class="footer-container">
+
+
+            <!-- Brand -->
+
+            <div class="footer-brand">
+
+                <a href="/"
+                    class="footer-logo">
+
+                    <span>
+                        ✦
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            GYAAN
+                        </strong>
+
+                        <small>
+                            AI TUTOR
+                        </small>
+
+                    </div>
+
+                </a>
+
+
+                <p>
+                    Making quality education
+                    simple, accessible and
+                    multilingual for every learner.
+                </p>
+
+            </div>
+
+
+
+            <!-- Quick Links -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a href="/">
+                    Home
+                </a>
+
+                <a href="AI Tutar.Html">
+                    AI Tutor
+                </a>
+
+                <a href="subjects.html">
+                    Subjects
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+
+
+            <!-- Learning -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Learning
+                </h3>
+
+                <a href="subjects.html">
+                    Explore Subjects
+                </a>
+
+                <a href="quiz.html">
+                    Take a Quiz
+                </a>
+
+                <a href="tutor.html">
+                    Ask AI Tutor
+                </a>
+
+                <a href="profile.html">
+                    My Profile
+                </a>
+
+            </div>
+
+
+
+            <!-- Account -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Account
+                </h3>
+
+                <a href="login.html">
+                    Login
+                </a>
+
+                <a href="register.html">
+                    Create Account
+                </a>
+
+                <a href="profile.html">
+                    Profile
+                </a>
+
+                <a href="about.html">
+                    About Gyaan
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Bottom -->
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Gyaan AI Tutor.
+                All rights reserved.
+            </p>
+
+
+            <div>
+
+                <a href="privacy.html">
+                    Privacy Policy
+                </a>
+
+                <a href="terms.html">
+                    Terms of Use
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script>
+
+
+        /* Mobile Menu */
+
+        const menuToggle =
+            document.getElementById("menuToggle");
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+
+        menuToggle.addEventListener("click", () => {
+
+            navLinks.classList.toggle("show");
+
+
+            if (
+                navLinks.classList.contains("show")
+            ) {
+
+                menuToggle.innerHTML = "✕";
+
+            } else {
+
+                menuToggle.innerHTML = "☰";
+
+            }
+
+        });
+
+
+
+        /* Language */
+
+        const languageBtn =
+            document.getElementById("languageBtn");
+
+        const languageMenu =
+            document.getElementById("languageMenu");
+
+        const selectedLanguage =
+            document.getElementById(
+                "selectedLanguage"
+            );
+
+
+        languageBtn.addEventListener(
+            "click",
+            (event) => {
+
+                event.stopPropagation();
+
+                languageMenu.classList.toggle("open");
+
+            }
+        );
+
+
+
+        const languageOptions =
+            document.querySelectorAll(
+                ".language-dropdown a"
+            );
+
+
+        languageOptions.forEach(option => {
+
+            option.addEventListener(
+                "click",
+                (event) => {
+
+                    event.preventDefault();
+
+                    const language =
+                        option.getAttribute(
+                            "data-lang"
+                        );
+
+
+                    selectedLanguage.textContent =
+                        language;
+
+
+                    languageMenu.classList.remove(
+                        "open"
+                    );
+
+                }
+            );
+
+        });
+
+
+
+        document.addEventListener(
+            "click",
+            () => {
+
+                languageMenu.classList.remove(
+                    "open"
+                );
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+<script src="common.js"></script>
+
+</html>
+

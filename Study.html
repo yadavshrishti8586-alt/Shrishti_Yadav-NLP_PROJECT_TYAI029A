@@ -1,0 +1,707 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Study Timer | Gyaan AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            color: #1f2937;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        /* Timer Card */
+        .timer-card {
+            background: white;
+            border-radius: 24px;
+            padding: 45px 30px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .timer-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        
+
+        .timer {
+            font-size: 70px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #111827;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .start {
+            background: #16a34a;
+            color: white;
+        }
+
+        .pause {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .stop {
+            background: #ef4444;
+            color: white;
+        }
+
+        .restart {
+            background: #6366f1;
+            color: white;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Statistics */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-icon {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .stat-title {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 7px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        /* Goal */
+        .goal-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .goal-title {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .goal-time {
+            font-weight: bold;
+            color: #6366f1;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #6366f1;
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+
+        .goal-status {
+            text-align: center;
+            font-weight: 600;
+            color: #ef4444;
+        }
+
+        .back-btn {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    background: white;
+    color: #111827;
+
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+
+    border-radius: 10px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+
+
+        .goal-status.completed {
+            color: #16a34a;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .timer {
+                font-size: 52px;
+            }
+
+            .timer-card {
+                padding: 35px 20px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <a href="/" class="back-btn">← Back</a>
+
+    <div class="header">
+        <h1>📚 Study Timer</h1>
+        <p>Focus on your studies and track your progress.</p>
+    </div>
+
+
+    <!-- TIMER -->
+    <div class="timer-card">
+
+        <div class="timer-icon">⏱️</div>
+
+        <div class="timer" id="timer">
+            00:00:00
+        </div>
+
+        <div class="buttons">
+
+            <button class="start" id="startBtn" onclick="startTimer()">
+                ▶ Start
+            </button>
+
+            <button class="pause" id="pauseBtn" onclick="pauseTimer()" disabled>
+                ⏸ Pause
+            </button>
+
+            <button class="stop" id="stopBtn" onclick="stopTimer()" disabled>
+                ⏹ Stop
+            </button>
+
+            <button class="restart" onclick="restartTimer()">
+                🔄 Restart
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+    <div class="stats">
+
+        <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-title">Total Study Time</div>
+            <div class="stat-value" id="totalTime">
+                0 sec
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-title">Today</div>
+            <div class="stat-value" id="todayTime">
+                0 sec
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-title">This Week</div>
+            <div class="stat-value" id="weekTime">
+                0 sec
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- DAILY GOAL -->
+    <div class="goal-card">
+
+        <div class="goal-header">
+
+            <div class="goal-title">
+                🎯 Daily Goal
+            </div>
+
+            <div class="goal-time">
+                2 hrs
+            </div>
+
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="goal-status" id="goalStatus">
+            ⭐ Goal Status: Not Completed
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // ==========================================
+    // TIMER VARIABLES
+    // ==========================================
+
+    let seconds = 0;
+    let timerInterval = null;
+    let isRunning = false;
+
+    // Daily goal = 2 hours
+    const DAILY_GOAL = 2 * 60 * 60;
+
+
+    // ==========================================
+    // LOCAL STORAGE
+    // ==========================================
+
+    let studyData = JSON.parse(
+        localStorage.getItem("studyData")
+    ) || {
+        total: 0,
+        days: {}
+    };
+
+
+    // ==========================================
+    // DATE FUNCTIONS
+    // ==========================================
+
+    function getTodayKey() {
+
+        const date = new Date();
+
+        return date.getFullYear() + "-" +
+            String(date.getMonth() + 1).padStart(2, "0") + "-" +
+            String(date.getDate()).padStart(2, "0");
+    }
+
+
+    function getWeekStart() {
+
+        const date = new Date();
+
+        const day = date.getDay();
+
+        const difference = day === 0 ? -6 : 1 - day;
+
+        date.setDate(date.getDate() + difference);
+
+        date.setHours(0, 0, 0, 0);
+
+        return date;
+
+    }
+
+
+    function getWeekStudyTime() {
+
+        let total = 0;
+
+        const weekStart = getWeekStart();
+
+        for (const dateKey in studyData.days) {
+
+            const date = new Date(dateKey + "T00:00:00");
+
+            if (date >= weekStart) {
+
+                total += studyData.days[dateKey];
+
+            }
+
+        }
+
+        return total;
+
+    }
+
+
+    // ==========================================
+    // FORMAT TIME
+    // ==========================================
+
+    function formatTimer(totalSeconds) {
+
+        const hours = Math.floor(totalSeconds / 3600);
+
+        const minutes = Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+        const seconds = totalSeconds % 60;
+
+        return String(hours).padStart(2, "0") + ":" +
+            String(minutes).padStart(2, "0") + ":" +
+            String(seconds).padStart(2, "0");
+
+    }
+
+
+    function formatStats(totalSeconds) {
+
+        if (totalSeconds < 60) {
+
+            return totalSeconds + " sec";
+
+        }
+
+        if (totalSeconds < 3600) {
+
+            const minutes = Math.floor(totalSeconds / 60);
+
+            return minutes + " min";
+
+        }
+
+        const hours = Math.floor(totalSeconds / 3600);
+
+        const minutes = Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+        if (minutes === 0) {
+
+            return hours + " hrs";
+
+        }
+
+        return hours + " hrs " + minutes + " min";
+
+    }
+
+
+    // ==========================================
+    // UPDATE TIMER
+    // ==========================================
+
+    function updateTimerDisplay() {
+
+        document.getElementById("timer").innerText =
+            formatTimer(seconds);
+
+    }
+
+
+    // ==========================================
+    // START TIMER
+    // ==========================================
+
+    function startTimer() {
+
+        if (isRunning) return;
+
+        isRunning = true;
+
+        document.getElementById("startBtn").disabled = true;
+
+        document.getElementById("pauseBtn").disabled = false;
+
+        document.getElementById("stopBtn").disabled = false;
+
+
+        timerInterval = setInterval(() => {
+
+            seconds++;
+
+            updateTimerDisplay();
+
+        }, 1000);
+
+    }
+
+
+    // ==========================================
+    // PAUSE TIMER
+    // ==========================================
+
+    function pauseTimer() {
+
+        if (!isRunning) return;
+
+        clearInterval(timerInterval);
+
+        isRunning = false;
+
+        saveStudyTime();
+
+        document.getElementById("startBtn").disabled = false;
+
+        document.getElementById("pauseBtn").disabled = true;
+
+    }
+
+
+    // ==========================================
+    // STOP TIMER
+    // ==========================================
+
+    function stopTimer() {
+
+        clearInterval(timerInterval);
+
+        isRunning = false;
+
+        saveStudyTime();
+
+        seconds = 0;
+
+        updateTimerDisplay();
+
+        document.getElementById("startBtn").disabled = false;
+
+        document.getElementById("pauseBtn").disabled = true;
+
+        document.getElementById("stopBtn").disabled = true;
+
+    }
+
+
+    // ==========================================
+    // RESTART TIMER
+    // ==========================================
+
+    function restartTimer() {
+
+        clearInterval(timerInterval);
+
+        isRunning = false;
+
+        seconds = 0;
+
+        updateTimerDisplay();
+
+        document.getElementById("startBtn").disabled = false;
+
+        document.getElementById("pauseBtn").disabled = true;
+
+        document.getElementById("stopBtn").disabled = true;
+
+    }
+
+
+    // ==========================================
+    // SAVE STUDY TIME
+    // ==========================================
+
+    function saveStudyTime() {
+
+        if (seconds <= 0) return;
+
+        const today = getTodayKey();
+
+        if (!studyData.days[today]) {
+
+            studyData.days[today] = 0;
+
+        }
+
+        studyData.days[today] += seconds;
+
+        studyData.total += seconds;
+
+        localStorage.setItem(
+            "studyData",
+            JSON.stringify(studyData)
+        );
+
+        seconds = 0;
+
+        updateStats();
+
+    }
+
+
+    // ==========================================
+    // UPDATE STATISTICS
+    // ==========================================
+
+    function updateStats() {
+
+        const today = getTodayKey();
+
+        const todaySeconds =
+            studyData.days[today] || 0;
+
+        const weekSeconds =
+            getWeekStudyTime();
+
+
+        document.getElementById("totalTime").innerText =
+            formatStats(studyData.total);
+
+        document.getElementById("todayTime").innerText =
+            formatStats(todaySeconds);
+
+        document.getElementById("weekTime").innerText =
+            formatStats(weekSeconds);
+
+
+        // Goal Progress
+
+        const percentage =
+            Math.min(
+                (todaySeconds / DAILY_GOAL) * 100,
+                100
+            );
+
+        document.getElementById("progressBar").style.width =
+            percentage + "%";
+
+
+        // Goal Status
+
+        const goalStatus =
+            document.getElementById("goalStatus");
+
+
+        if (todaySeconds >= DAILY_GOAL) {
+
+            goalStatus.innerText =
+                "⭐ Goal Status: Completed 🎉";
+
+            goalStatus.classList.add("completed");
+
+        } else {
+
+            goalStatus.innerText =
+                "⭐ Goal Status: Not Completed";
+
+            goalStatus.classList.remove("completed");
+
+        }
+
+    }
+
+
+    // ==========================================
+    // PAGE LOAD
+    // ==========================================
+
+    updateTimerDisplay();
+
+    updateStats();
+
+</script>
+
+</body>
+</html>

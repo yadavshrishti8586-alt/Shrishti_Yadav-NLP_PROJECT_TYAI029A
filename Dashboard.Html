@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Dashboard | Gyaan AI Tutor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#f7f8fc;color:#172033;font-family:Inter,sans-serif}nav{align-items:center;background:#fff;border-bottom:1px solid #e7eaf2;display:flex;justify-content:space-between;padding:18px max(24px,calc((100% - 1100px)/2))}.brand{color:#3a48c5;font-weight:800;letter-spacing:1px}.brand small{display:block;font-size:9px;letter-spacing:2px}button,.action{border:0;border-radius:9px;cursor:pointer;font:inherit;padding:11px 16px;text-decoration:none}.action{background:#4354d8;color:#fff}#logout{background:#eef0f8;color:#27304d}main{margin:42px auto;max-width:1100px;padding:0 24px}h1{margin-bottom:8px}.muted{color:#697386}.grid{display:grid;gap:20px;grid-template-columns:240px 1fr;margin-top:28px}.card{background:#fff;border:1px solid #e7eaf2;border-radius:16px;box-shadow:0 4px 20px #242b5b0a;padding:24px}.number{color:#4354d8;font-size:38px;font-weight:800;margin:10px 0}.activity-item{border-bottom:1px solid #edf0f5;padding:15px 0}.activity-item:last-child{border:0}.subject{color:#4354d8;font-size:12px;font-weight:700;text-transform:uppercase}.title{font-weight:700;margin:6px 0 4px}.meta{color:#697386;font-size:12px;margin-bottom:6px}.question, .answer, .summary{color:#697386;white-space:pre-wrap}.badge{display:inline-block;margin-top:8px;padding:5px 8px;border-radius:999px;background:#eef1ff;color:#3a48c5;font-size:11px;font-weight:700}.quiz-score{color:#28386c;font-weight:700}.activity-type{font-size:11px;letter-spacing:.1em;color:#8a94a6;text-transform:uppercase}@media(max-width:700px){.grid{grid-template-columns:1fr}main{margin-top:28px}nav{padding:16px 20px}}
+  </style>
+</head>
+<body>
+  <nav><div class="brand">GYAAN<small>AI TUTOR</small></div><div><a class="action" href="/">Home</a> <a class="action" href="/ai-tutor">AI Tutor</a> <a class="action" href="/quiz">Quiz</a> <a class="action" href="/study-materials">Study Material</a> <a class="action" href="/upload-material">Upload Material</a> <button id="logout">Log out</button></div></nav>
+  <main>
+    <h1 id="welcome">Welcome back</h1>
+    <p class="muted" id="details">Loading your learning space...</p>
+    <section class="grid">
+      <article class="card">
+        <div class="muted">AI questions</div>
+        <div id="questionCount" class="number">0</div>
+        <p class="muted">Your personal learning history is saved securely.</p>
+        <div class="muted" style="margin-top:16px">Quiz attempts</div>
+        <div id="quizCount" class="number" style="font-size:28px;margin-top:8px">0</div>
+      </article>
+      <article class="card">
+        <h2>Full activity record</h2>
+        <div id="activityList" class="muted">Loading...</div>
+      </article>
+    </section>
+  </main>
+  <script>
+    const API_BASE = window.location.hostname === 'gyaan-ai-backend.onrender.com' ? 'https://gyaan-ai-backend.onrender.com' : '';
+    const token=localStorage.getItem('token');
+    const logout=()=>{localStorage.removeItem('token');localStorage.removeItem('user');location.href='Login.Html'};
+    document.getElementById('logout').onclick=logout;
+    const escapeHtml=text=>{const el=document.createElement('div');el.textContent=text;return el.innerHTML};
+    const formatDate = (value) => {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return 'Recently';
+      return date.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+    };
+    async function loadDashboard(){if(!token)return logout();try{const response=await fetch(API_BASE+'/api/dashboard',{headers:{Authorization:'Bearer '+token}});if(!response.ok)return logout();const data=await response.json();localStorage.setItem('user',JSON.stringify(data.user));document.getElementById('welcome').textContent='Welcome back, '+data.user.name+'!';document.getElementById('details').textContent=data.user.email+' · Preferred language: '+data.user.language;document.getElementById('questionCount').textContent=data.totalQuestions;document.getElementById('quizCount').textContent=data.totalQuizAttempts;const activity=data.activity||[];document.getElementById('activityList').innerHTML=activity.length?activity.map(item=>{
+        if(item.type==='quiz'){
+          return '<div class="activity-item"><div class="subject">'+escapeHtml(item.subject)+'</div><div class="title">'+escapeHtml(item.title)+'</div><div class="meta">'+escapeHtml(formatDate(item.createdAt))+' · Class '+escapeHtml(item.description.split('•')[0].replace('Class ',''))+'</div><div class="quiz-score">Score: '+escapeHtml(item.score)+' / '+escapeHtml(item.total)+' ('+escapeHtml(item.percentage)+'%)</div><div class="summary">'+escapeHtml(item.summary || 'Quiz completed successfully.')+'</div></div>';
+        }
+        return '<div class="activity-item"><div class="subject">'+escapeHtml(item.subject)+'</div><div class="title">'+escapeHtml(item.title)+'</div><div class="meta">'+escapeHtml(formatDate(item.createdAt))+'</div><div class="question">Q: '+escapeHtml(item.description)+'</div><div class="answer">A: '+escapeHtml(item.answer)+'</div></div>';
+      }).join(''):'No activity yet. Open the AI Tutor and take a quiz to start building your learning record!';}catch(_){logout()}}
+    loadDashboard();
+  </script>
+</body>
+</html>

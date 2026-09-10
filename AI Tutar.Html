@@ -1,0 +1,946 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AI Tutor | Gyaan AI Tutor</title>
+
+    <!-- Navbar CSS -->
+    <link rel="stylesheet" href="index.css">
+
+    <!-- Tutor CSS -->
+    <link rel="stylesheet" href="AI.css">
+
+    <!-- Font -->
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         NAVBAR
+    ================================================== -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+
+            <!-- Logo -->
+
+            <a href="/" class="logo">
+
+                <div class="logo-icon">
+                    ✦
+                </div>
+
+                <div class="logo-text">
+
+                    <span>GYAAN</span>
+
+                    <small>AI TUTOR</small>
+
+                </div>
+
+            </a>
+
+
+            <!-- Navigation -->
+
+            <div class="nav-links" id="navLinks">
+
+                <a href="/">
+                    Home
+                </a>
+
+                <a href="AI Tutar.Html" class="active">
+                    AI Tutor
+                </a>
+
+
+                <!-- Language -->
+
+                <div class="language-menu"
+                    id="languageMenu">
+
+                    <button
+                        class="language-btn"
+                        id="languageBtn"
+                        type="button">
+
+                        <span>🌐</span>
+
+                        <span id="selectedLanguage">
+                            Language
+                        </span>
+
+                        <span class="arrow">
+                            ⌄
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        class="language-dropdown"
+                        id="languageDropdown">
+
+                        <a href="#"
+                            data-lang="English">
+                            🇬🇧 English
+                        </a>
+
+                        <a href="#"
+                            data-lang="Hindi">
+                            🇮🇳 हिंदी
+                        </a>
+
+                        <a href="#"
+                            data-lang="Marathi">
+                            🇮🇳 मराठी
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+
+            <!-- Right -->
+
+            <div class="nav-actions">
+
+                <a href="login.html"
+                    class="login-btn">
+
+                    Login
+
+                </a>
+
+
+                <a href="profile.html"
+                    class="profile-btn">
+
+                    <span class="profile-icon">
+                        👤
+                    </span>
+
+                    Profile
+
+                </a>
+
+            </div>
+
+
+            <!-- Mobile -->
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button">
+
+                ☰
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ==================================================
+         AI TUTOR PAGE
+    ================================================== -->
+
+    <main class="tutor-page">
+
+
+        <div class="tutor-shell">
+
+
+            <!-- =================================
+                 SIDEBAR
+            ================================== -->
+
+            <aside class="tutor-sidebar" id="tutorSidebar">
+
+                <div class="sidebar-head">
+
+                    <span>SUBJECTS</span>
+
+                    <button class="sidebar-close" id="sidebarClose" type="button">
+                        ✕
+                    </button>
+
+                </div>
+
+
+                <div class="subject-list">
+
+                    <button class="subject-item active" data-subject="General">
+                        <span class="subject-emoji">🤖</span>
+                        General
+                    </button>
+
+                    <button class="subject-item" data-subject="Maths">
+                        <span class="subject-emoji">📐</span>
+                        Maths
+                    </button>
+
+                    <button class="subject-item" data-subject="Science">
+                        <span class="subject-emoji">🔬</span>
+                        Science
+                    </button>
+
+                    <button class="subject-item" data-subject="Computer">
+                        <span class="subject-emoji">💻</span>
+                        Computer
+                    </button>
+
+                    <button class="subject-item" data-subject="English">
+                        <span class="subject-emoji">📖</span>
+                        English
+                    </button>
+
+                </div>
+
+
+                <div class="sidebar-tip">
+
+                    <div class="sidebar-tip-icon">
+                        💡
+                    </div>
+
+                    <p>
+                        Tap the mic and ask your question
+                        out loud — in English, Hindi or
+                        Marathi.
+                    </p>
+
+                </div>
+
+            </aside>
+
+
+
+            <!-- =================================
+                 CHAT PANEL
+            ================================== -->
+
+            <section class="tutor-chat">
+
+
+                <!-- Chat header -->
+
+                <div class="chat-header">
+
+                    <button class="subjects-toggle" id="subjectsToggle" type="button">
+                        ☰
+                    </button>
+
+                    <div class="chat-header-info">
+
+                        <div class="chat-avatar">
+                            🤖
+                        </div>
+
+                        <div>
+                            <strong>Gyaan AI Tutor</strong>
+                            <span id="activeSubjectLabel">General • Online</span>
+                        </div>
+
+                    </div>
+
+                    <button class="chat-clear" id="clearChat" type="button">
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <!-- Messages -->
+
+                <div class="chat-body" id="chatBody">
+
+                    <div class="msg msg-bot">
+
+                        <div class="msg-avatar">🤖</div>
+
+                        <div class="msg-bubble">
+                            Hello! I'm your AI Tutor. Ask
+                            me anything about Maths,
+                            Science, Computer or English —
+                            by typing or by voice.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Quick prompts -->
+
+                <div class="quick-prompts" id="quickPrompts">
+
+                    <button class="quick-chip">
+                        What is photosynthesis?
+                    </button>
+
+                    <button class="quick-chip">
+                        Explain Newton's first law
+                    </button>
+
+                    <button class="quick-chip">
+                        What is a variable in coding?
+                    </button>
+
+                </div>
+
+
+                <!-- Listening indicator -->
+
+                <div class="listening-bar" id="listeningBar">
+
+                    <span class="listening-dot"></span>
+
+                    Listening... speak your question
+
+                </div>
+
+
+                <!-- Input -->
+
+                <form class="chat-input-bar" id="chatForm">
+
+                    <button
+                        type="button"
+                        class="mic-btn"
+                        id="micBtn"
+                        aria-label="Ask by voice">
+                        🎤
+                    </button>
+
+                    <input
+                        type="text"
+                        id="chatInput"
+                        placeholder="Ask your question..."
+                        autocomplete="off">
+
+                    <button type="submit" class="send-btn" aria-label="Send">
+                        ➤
+                    </button>
+
+                </form>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script>
+
+        const API_BASE = window.location.hostname === "gyaan-ai-backend.onrender.com" ? "https://gyaan-ai-backend.onrender.com" : "";
+
+        async function readApiResponse(response) {
+
+            const text = await response.text();
+
+            try {
+                return text ? JSON.parse(text) : {};
+            } catch (_) {
+                return { message: "The backend returned an invalid response. Start the backend with npm.cmd start." };
+            }
+
+        }
+
+
+        /* ============================
+           MOBILE MENU
+        ============================ */
+
+        const menuToggle =
+            document.getElementById("menuToggle");
+
+        const navLinks =
+            document.getElementById("navLinks");
+
+
+        menuToggle.addEventListener(
+            "click",
+            () => {
+
+                navLinks.classList.toggle("show");
+
+                menuToggle.innerHTML =
+                    navLinks.classList.contains("show")
+                        ? "✕"
+                        : "☰";
+
+            }
+        );
+
+
+
+        /* ============================
+           LANGUAGE
+        ============================ */
+
+        const languageBtn =
+            document.getElementById("languageBtn");
+
+        const languageMenu =
+            document.getElementById("languageMenu");
+
+        const selectedLanguage =
+            document.getElementById("selectedLanguage");
+
+
+        languageBtn.addEventListener(
+            "click",
+            (event) => {
+
+                event.stopPropagation();
+
+                languageMenu.classList.toggle("open");
+
+            }
+        );
+
+
+        document.querySelectorAll(".language-dropdown a")
+            .forEach(option => {
+
+                option.addEventListener(
+                    "click",
+                    (event) => {
+
+                        event.preventDefault();
+
+                        selectedLanguage.textContent =
+                            option.getAttribute("data-lang");
+
+                        languageMenu.classList.remove("open");
+
+                    }
+                );
+
+            });
+
+
+        document.addEventListener(
+            "click",
+            () => {
+
+                languageMenu.classList.remove("open");
+
+            }
+        );
+
+
+
+        /* ============================
+           SIDEBAR (mobile)
+        ============================ */
+
+        const tutorSidebar =
+            document.getElementById("tutorSidebar");
+
+        const subjectsToggle =
+            document.getElementById("subjectsToggle");
+
+        const sidebarClose =
+            document.getElementById("sidebarClose");
+
+
+        subjectsToggle.addEventListener("click", () => {
+
+            tutorSidebar.classList.add("open");
+
+        });
+
+
+        sidebarClose.addEventListener("click", () => {
+
+            tutorSidebar.classList.remove("open");
+
+        });
+
+
+
+        /* ============================
+           SUBJECT SELECT
+        ============================ */
+
+        const subjectItems =
+            document.querySelectorAll(".subject-item");
+
+        const activeSubjectLabel =
+            document.getElementById("activeSubjectLabel");
+
+
+        subjectItems.forEach(item => {
+
+            item.addEventListener("click", () => {
+
+                subjectItems.forEach(i =>
+                    i.classList.remove("active"));
+
+                item.classList.add("active");
+
+                activeSubjectLabel.textContent =
+                    item.dataset.subject + " • Online";
+
+                tutorSidebar.classList.remove("open");
+
+            });
+
+        });
+
+
+
+        /* ============================
+           CHAT LOGIC
+        ============================ */
+
+        const chatBody =
+            document.getElementById("chatBody");
+
+        const chatForm =
+            document.getElementById("chatForm");
+
+        const chatInput =
+            document.getElementById("chatInput");
+
+        const listeningBar =
+            document.getElementById("listeningBar");
+
+        const micBtn =
+            document.getElementById("micBtn");
+
+        const clearChat =
+            document.getElementById("clearChat");
+
+        const quickPrompts =
+            document.getElementById("quickPrompts");
+
+        const subjectPrompts = {
+            General: ["What can you help me learn?", "How can I study better?", "Explain AI in simple words"],
+            Maths: ["What is the Pythagorean theorem?", "Solve 25% of 480", "Explain algebraic expressions"],
+            Science: ["What is photosynthesis?", "Explain Newton's first law", "How does the human heart work?"],
+            Computer: ["What is a variable in coding?", "Explain HTML and CSS", "What is an algorithm?"],
+            English: ["What is a noun?", "Explain present tense", "Help me improve this sentence"]
+        };
+
+        function updateQuickPrompts(subject) {
+
+            quickPrompts.innerHTML = "";
+
+            subjectPrompts[subject].forEach(prompt => {
+
+                const button = document.createElement("button");
+                button.className = "quick-chip";
+                button.textContent = prompt;
+                button.addEventListener("click", () => sendMessage(prompt));
+                quickPrompts.appendChild(button);
+
+            });
+
+            quickPrompts.style.display = "flex";
+
+        }
+
+        function resetSubjectChat(subject) {
+
+            chatBody.innerHTML =
+                '<div class="msg msg-bot">' +
+                '<div class="msg-avatar">🤖</div>' +
+                '<div class="msg-bubble">You are now learning ' + subject + '. What would you like to ask?</div>' +
+                '</div>';
+
+            updateQuickPrompts(subject);
+            loadChatHistory(subject);
+
+        }
+
+        subjectItems.forEach(item => {
+
+            item.addEventListener("click", () => {
+                resetSubjectChat(item.dataset.subject);
+            });
+
+        });
+
+
+        function addMessage(text, sender) {
+
+            const msg = document.createElement("div");
+
+            msg.className = "msg msg-" + sender;
+
+            const avatar = document.createElement("div");
+
+            avatar.className = "msg-avatar";
+
+            avatar.textContent =
+                sender === "bot" ? "🤖" : "👤";
+
+            const bubble = document.createElement("div");
+
+            bubble.className = "msg-bubble";
+
+            bubble.textContent = text;
+
+            if (sender === "user") {
+
+                msg.appendChild(bubble);
+                msg.appendChild(avatar);
+
+            } else {
+
+                msg.appendChild(avatar);
+                msg.appendChild(bubble);
+
+            }
+
+            chatBody.appendChild(msg);
+
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+        }
+
+
+        function showTyping() {
+
+            const typing = document.createElement("div");
+
+            typing.className = "msg msg-bot";
+            typing.id = "typingIndicator";
+
+            typing.innerHTML =
+                '<div class="msg-avatar">🤖</div>' +
+                '<div class="msg-bubble typing-bubble">' +
+                '<span></span><span></span><span></span>' +
+                '</div>';
+
+            chatBody.appendChild(typing);
+
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+        }
+
+
+        function removeTyping() {
+
+            const typing =
+                document.getElementById("typingIndicator");
+
+            if (typing) {
+                typing.remove();
+            }
+
+        }
+
+
+        async function fakeAiReply(question) {
+
+            showTyping();
+
+            try {
+
+                const response = await fetch(API_BASE + "/api/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        question,
+                        subject: document.querySelector(".subject-item.active").dataset.subject
+                    })
+                });
+
+                const data = await readApiResponse(response);
+
+                if (response.status === 401) {
+                    addMessage("Please log in first to ask the AI Tutor a question.", "bot");
+                    return;
+                }
+
+                if (!response.ok) throw new Error(data.message || "Could not get an answer.");
+
+                addMessage(data.answer, "bot");
+
+            } catch (error) {
+
+                addMessage(error.message || "Something went wrong. Please try again.", "bot");
+
+            } finally {
+
+                removeTyping();
+
+            }
+
+            return;
+
+            showTyping();
+
+            setTimeout(() => {
+
+                removeTyping();
+
+                addMessage(
+                    "Here's a simple explanation for: \"" +
+                    question +
+                    "\" — connect this page to the /api/chat " +
+                    "backend to get a real AI-generated answer.",
+                    "bot"
+                );
+
+            }, 900);
+
+        }
+
+
+        function sendMessage(text) {
+
+            const question = text.trim();
+
+            if (!question) {
+                return;
+            }
+
+            addMessage(question, "user");
+
+            chatInput.value = "";
+
+            quickPrompts.style.display = "none";
+
+            fakeAiReply(question);
+
+        }
+
+
+        chatForm.addEventListener("submit", (event) => {
+
+            event.preventDefault();
+
+            sendMessage(chatInput.value);
+
+        });
+
+
+        document.querySelectorAll(".quick-chip")
+            .forEach(chip => {
+
+                chip.addEventListener("click", () => {
+
+                    sendMessage(chip.textContent.trim());
+
+                });
+
+            });
+
+
+        clearChat.addEventListener("click", async () => {
+
+            try {
+
+                const response = await fetch(API_BASE + "/api/chats", {
+                    method: "DELETE",
+                    headers: { "Authorization": "Bearer " + localStorage.getItem("token") }
+                });
+
+                if (!response.ok) throw new Error();
+
+            } catch (_) {
+
+                addMessage("Could not clear saved history. Please try again.", "bot");
+                return;
+
+            }
+
+            chatBody.innerHTML =
+                '<div class="msg msg-bot">' +
+                '<div class="msg-avatar">🤖</div>' +
+                '<div class="msg-bubble">' +
+                'Chat cleared. What would you like to learn?' +
+                '</div></div>';
+
+            quickPrompts.style.display = "flex";
+
+        });
+
+        async function loadChatHistory(subject = "General") {
+
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                return;
+            }
+
+            try {
+
+                const response = await fetch(API_BASE + "/api/chats?subject=" + encodeURIComponent(subject), {
+                    headers: { "Authorization": "Bearer " + token }
+                });
+
+                const data = await readApiResponse(response);
+
+                if (response.status === 401) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                    return;
+                }
+
+                if (response.ok && data.chats && data.chats.length) {
+                    chatBody.innerHTML = "";
+                    data.chats.forEach(chat => {
+                        addMessage(chat.question, "user");
+                        addMessage(chat.answer, "bot");
+                    });
+                    quickPrompts.style.display = "none";
+                }
+
+            } catch (_) {}
+
+        }
+
+        updateQuickPrompts("General");
+        loadChatHistory("General");
+
+
+
+        /* ============================
+           VOICE INPUT (Web Speech API)
+        ============================ */
+
+        const SpeechRecognition =
+            window.SpeechRecognition ||
+            window.webkitSpeechRecognition;
+
+        let recognition = null;
+        let isListening = false;
+
+
+        if (SpeechRecognition) {
+
+            recognition = new SpeechRecognition();
+
+            recognition.continuous = false;
+
+            recognition.interimResults = false;
+
+
+            recognition.onresult = (event) => {
+
+                const transcript =
+                    event.results[0][0].transcript;
+
+                sendMessage(transcript);
+
+            };
+
+
+            recognition.onend = () => {
+
+                isListening = false;
+
+                listeningBar.classList.remove("show");
+
+                micBtn.classList.remove("active");
+
+            };
+
+
+            recognition.onerror = () => {
+
+                isListening = false;
+
+                listeningBar.classList.remove("show");
+
+                micBtn.classList.remove("active");
+
+            };
+
+        }
+
+
+        micBtn.addEventListener("click", () => {
+
+            if (!recognition) {
+
+                alert(
+                    "Voice input isn't supported in this " +
+                    "browser. Try Chrome on desktop or Android."
+                );
+
+                return;
+
+            }
+
+            if (isListening) {
+
+                recognition.stop();
+
+                return;
+
+            }
+
+            const lang = selectedLanguage.textContent;
+
+            recognition.lang =
+                lang === "Hindi" ? "hi-IN" :
+                lang === "Marathi" ? "mr-IN" :
+                "en-IN";
+
+            recognition.start();
+
+            isListening = true;
+
+            listeningBar.classList.add("show");
+
+            micBtn.classList.add("active");
+
+        });
+
+
+    </script>
+
+
+</body>
+<script src="common.js"></script>
+
+</html>
+

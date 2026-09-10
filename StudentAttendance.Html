@@ -1,0 +1,1062 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Attendance | Gyaan AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 70px;
+            background: #ffffff;
+            border-bottom: 1px solid #e8ebf1;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: #2563eb;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #eef4ff;
+            color: #2563eb;
+
+            padding: 10px 18px;
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+        .heading h1 span {
+            color: #2563eb;
+        }
+
+        .heading p {
+            color: #667085;
+        }
+
+        /* ================= ATTENDANCE CARD ================= */
+
+        .attendance-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+
+            box-shadow: 0 10px 35px rgba(0,0,0,0.06);
+
+            margin-bottom: 25px;
+        }
+
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .student-info h2 {
+            font-size: 22px;
+        }
+
+        .student-info p {
+            color: #667085;
+            margin-top: 5px;
+        }
+
+        .date-box {
+            text-align: right;
+        }
+
+        .date-box strong {
+            color: #2563eb;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .attendance-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .attendance-btn {
+            padding: 16px;
+
+            border: none;
+            border-radius: 12px;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .present {
+            background: #e9f9ef;
+            color: #15803d;
+        }
+
+        .present:hover {
+            background: #15803d;
+            color: white;
+        }
+
+        .absent {
+            background: #fff0f0;
+            color: #dc2626;
+        }
+
+        .absent:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        /* ================= STATISTICS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+
+            box-shadow: 0 7px 25px rgba(0,0,0,0.05);
+
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #667085;
+            font-size: 14px;
+        }
+
+        .blue {
+            color: #2563eb;
+        }
+
+        .green {
+            color: #16a34a;
+        }
+
+        .red {
+            color: #dc2626;
+        }
+
+        .orange {
+            color: #ea580c;
+        }
+
+        /* ================= PROGRESS ================= */
+
+        .progress-card {
+            background: white;
+            padding: 25px;
+
+            border-radius: 18px;
+
+            box-shadow: 0 7px 25px rgba(0,0,0,0.05);
+
+            margin-bottom: 25px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 12px;
+        }
+
+        .progress-header h3 {
+            font-size: 17px;
+        }
+
+        .percentage {
+            color: #2563eb;
+            font-weight: 800;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: #e9edf4;
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+
+            background: #2563eb;
+
+            border-radius: 20px;
+
+            transition: width 0.5s;
+        }
+
+        .status-message {
+            margin-top: 12px;
+            color: #667085;
+            font-size: 14px;
+        }
+
+        /* ================= HISTORY ================= */
+
+        .history-card {
+            background: white;
+            padding: 25px;
+
+            border-radius: 18px;
+
+            box-shadow: 0 7px 25px rgba(0,0,0,0.05);
+        }
+
+        .history-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 14px;
+            text-align: left;
+
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .history-table th {
+            color: #667085;
+            font-size: 13px;
+        }
+
+        .history-table td {
+            font-size: 14px;
+        }
+
+        .badge {
+            padding: 6px 11px;
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .badge.present {
+            background: #e9f9ef;
+            color: #15803d;
+        }
+
+        .badge.absent {
+            background: #fff0f0;
+            color: #dc2626;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: #98a2b3;
+        }
+
+        /* ================= CLEAR ================= */
+
+        .clear-box {
+            text-align: right;
+            margin-top: 18px;
+        }
+
+        .clear-btn {
+            border: none;
+            background: #f1f3f6;
+            color: #555;
+
+            padding: 9px 14px;
+            border-radius: 8px;
+
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .clear-btn:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 800px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .student-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .date-box {
+                text-align: left;
+            }
+        }
+
+        @media(max-width: 600px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .heading h1 {
+                font-size: 28px;
+            }
+
+            .attendance-card,
+            .progress-card,
+            .history-card {
+                padding: 20px;
+            }
+
+            .attendance-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-card {
+                padding: 17px 10px;
+            }
+
+            .stat-card .number {
+                font-size: 25px;
+            }
+
+            .history-card {
+                overflow-x: auto;
+            }
+
+            .history-table {
+                min-width: 550px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Gyaan AI
+        </div>
+
+        <a href="/" class="back-btn">
+            ← Back
+        </a>
+
+    </nav>
+
+
+    <main class="container">
+
+        <!-- ================= HEADING ================= -->
+
+        <div class="heading">
+
+            <h1>
+                Student <span>Attendance</span>
+            </h1>
+
+            <p>
+                Track your daily attendance and monitor your progress.
+            </p>
+
+        </div>
+
+
+        <!-- ================= MARK ATTENDANCE ================= -->
+
+        <div class="attendance-card">
+
+            <div class="student-info">
+
+                <div>
+                    <h2>Student Attendance</h2>
+
+                    <p>
+                        Mark today's attendance
+                    </p>
+                </div>
+
+                <div class="date-box">
+
+                    <p>Today's Date</p>
+
+                    <strong id="todayDate">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="attendance-buttons">
+
+                <button
+                    class="attendance-btn present"
+                    onclick="markAttendance('Present')">
+
+                    ✓ Present
+
+                </button>
+
+
+                <button
+                    class="attendance-btn absent"
+                    onclick="markAttendance('Absent')">
+
+                    ✕ Absent
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= STATISTICS ================= -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div
+                    id="totalDays"
+                    class="number blue">
+                    0
+                </div>
+
+                <p>
+                    Working Days
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div
+                    id="presentDays"
+                    class="number green">
+                    0
+                </div>
+
+                <p>
+                    Present
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div
+                    id="absentDays"
+                    class="number red">
+                    0
+                </div>
+
+                <p>
+                    Absent
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div
+                    id="attendancePercentage"
+                    class="number orange">
+                    0%
+                </div>
+
+                <p>
+                    Attendance
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= PROGRESS ================= -->
+
+        <div class="progress-card">
+
+            <div class="progress-header">
+
+                <h3>
+                    Attendance Progress
+                </h3>
+
+                <span
+                    id="progressPercentage"
+                    class="percentage">
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div
+                    id="progressFill"
+                    class="progress-fill">
+                </div>
+
+            </div>
+
+
+            <p
+                id="statusMessage"
+                class="status-message">
+
+                Start marking your attendance.
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= HISTORY ================= -->
+
+        <div class="history-card">
+
+            <h2>
+                Student History
+            </h2>
+
+
+            <table class="history-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Day
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="historyBody">
+
+                </tbody>
+
+            </table>
+
+
+            <div class="clear-box">
+
+                <button
+                    class="clear-btn"
+                    onclick="clearHistory()">
+
+                    Clear Attendance History
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        /* ==========================================
+           ATTENDANCE STORAGE
+           ========================================== */
+
+        let attendance =
+            JSON.parse(
+                localStorage.getItem("studentAttendance")
+            ) || [];
+
+
+        /* ==========================================
+           TODAY DATE
+           ========================================== */
+
+        function getToday() {
+
+            const now = new Date();
+
+            const year =
+                now.getFullYear();
+
+            const month =
+                String(now.getMonth() + 1)
+                    .padStart(2, "0");
+
+            const day =
+                String(now.getDate())
+                    .padStart(2, "0");
+
+            return `${year}-${month}-${day}`;
+        }
+
+
+        function formatDate(dateString) {
+
+            const date =
+                new Date(dateString + "T00:00:00");
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+        }
+
+
+        function getDay(dateString) {
+
+            const date =
+                new Date(dateString + "T00:00:00");
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    weekday: "long"
+                }
+            );
+
+        }
+
+
+        document.getElementById("todayDate")
+            .innerText =
+            formatDate(getToday());
+
+
+        /* ==========================================
+           MARK ATTENDANCE
+           ========================================== */
+
+        function markAttendance(status) {
+
+            const today =
+                getToday();
+
+
+            const existingIndex =
+                attendance.findIndex(
+                    item => item.date === today
+                );
+
+
+            const record = {
+
+                date: today,
+
+                day: getDay(today),
+
+                status: status
+
+            };
+
+
+            if (existingIndex !== -1) {
+
+                attendance[existingIndex] =
+                    record;
+
+            } else {
+
+                attendance.push(record);
+
+            }
+
+
+            /*
+             * Sort latest date first
+             */
+
+            attendance.sort(
+                (a, b) =>
+                    new Date(b.date) -
+                    new Date(a.date)
+            );
+
+
+            localStorage.setItem(
+                "studentAttendance",
+                JSON.stringify(attendance)
+            );
+
+
+            updateDashboard();
+
+
+            alert(
+                "Attendance marked as " +
+                status + "!"
+            );
+
+        }
+
+
+        /* ==========================================
+           UPDATE DASHBOARD
+           ========================================== */
+
+        function updateDashboard() {
+
+            const total =
+                attendance.length;
+
+
+            const present =
+                attendance.filter(
+                    item =>
+                        item.status === "Present"
+                ).length;
+
+
+            const absent =
+                attendance.filter(
+                    item =>
+                        item.status === "Absent"
+                ).length;
+
+
+            let percentage = 0;
+
+
+            if (total > 0) {
+
+                percentage =
+                    Math.round(
+                        (present / total) * 100
+                    );
+
+            }
+
+
+            document.getElementById("totalDays")
+                .innerText =
+                total;
+
+
+            document.getElementById("presentDays")
+                .innerText =
+                present;
+
+
+            document.getElementById("absentDays")
+                .innerText =
+                absent;
+
+
+            document.getElementById(
+                "attendancePercentage"
+            ).innerText =
+                percentage + "%";
+
+
+            document.getElementById(
+                "progressPercentage"
+            ).innerText =
+                percentage + "%";
+
+
+            document.getElementById(
+                "progressFill"
+            ).style.width =
+                percentage + "%";
+
+
+            updateMessage(percentage);
+
+            displayHistory();
+
+        }
+
+
+        /* ==========================================
+           STATUS MESSAGE
+           ========================================== */
+
+        function updateMessage(percentage) {
+
+            const message =
+                document.getElementById(
+                    "statusMessage"
+                );
+
+
+            if (percentage >= 85) {
+
+                message.innerText =
+                    "Excellent attendance! Keep it up.";
+
+            }
+
+            else if (percentage >= 75) {
+
+                message.innerText =
+                    "Good attendance. Try to maintain it.";
+
+            }
+
+            else if (percentage > 0) {
+
+                message.innerText =
+                    "Attendance is low. Try to attend classes regularly.";
+
+            }
+
+            else {
+
+                message.innerText =
+                    "Start marking your attendance.";
+
+            }
+
+        }
+
+
+        /* ==========================================
+           DISPLAY HISTORY
+           ========================================== */
+
+        function displayHistory() {
+
+            const body =
+                document.getElementById(
+                    "historyBody"
+                );
+
+
+            body.innerHTML = "";
+
+
+            if (attendance.length === 0) {
+
+                body.innerHTML = `
+                    <tr>
+                        <td
+                            colspan="3"
+                            class="empty">
+
+                            No attendance history yet.
+
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            attendance.forEach(item => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                const statusClass =
+                    item.status === "Present"
+                        ? "present"
+                        : "absent";
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${formatDate(item.date)}
+                    </td>
+
+                    <td>
+                        ${item.day}
+                    </td>
+
+                    <td>
+
+                        <span
+                            class="badge ${statusClass}">
+
+                            ${
+                                item.status === "Present"
+                                    ? "✓ Present"
+                                    : "✕ Absent"
+                            }
+
+                        </span>
+
+                    </td>
+
+                `;
+
+
+                body.appendChild(row);
+
+            });
+
+        }
+
+
+        /* ==========================================
+           CLEAR HISTORY
+           ========================================== */
+
+        function clearHistory() {
+
+            if (attendance.length === 0) {
+
+                alert(
+                    "Attendance history is already empty."
+                );
+
+                return;
+            }
+
+
+            const confirmClear =
+                confirm(
+                    "Are you sure you want to delete all attendance history?"
+                );
+
+
+            if (!confirmClear) {
+
+                return;
+
+            }
+
+
+            attendance = [];
+
+
+            localStorage.removeItem(
+                "studentAttendance"
+            );
+
+
+            updateDashboard();
+
+        }
+
+
+        /* ==========================================
+           INITIAL LOAD
+           ========================================== */
+
+        updateDashboard();
+
+    </script>
+
+</body>
+</html>
+```
+

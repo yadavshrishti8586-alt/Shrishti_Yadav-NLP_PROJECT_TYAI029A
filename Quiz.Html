@@ -1,0 +1,1434 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gyaan AI - Quiz</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid #e8eaf0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .back-btn {
+            border: none;
+            background: #eef4ff;
+            color: #2563eb;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .back-btn:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 92%;
+            max-width: 1050px;
+            margin: 35px auto;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            color: #697386;
+            font-size: 15px;
+        }
+
+        /* ================= SETUP ================= */
+
+        .setup-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,.06);
+        }
+
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dfe3eb;
+            border-radius: 11px;
+            outline: none;
+            background: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: #2563eb;
+        }
+
+        .start-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .start-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        /* ================= QUIZ ================= */
+
+        .quiz-section {
+            display: none;
+        }
+
+        .quiz-header {
+            background: white;
+            padding: 18px 22px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,.05);
+        }
+
+        .quiz-title {
+            font-weight: 800;
+        }
+
+        .progress-text {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e9edf5;
+            border-radius: 20px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 5%;
+            background: #2563eb;
+            transition: .3s;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0,0,0,.06);
+        }
+
+        .question-number {
+            color: #2563eb;
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 23px;
+            line-height: 1.5;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+
+        .small-btn {
+            border: 1px solid #dfe3eb;
+            background: #f8fafc;
+            padding: 9px 13px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .small-btn:hover {
+            background: #eef4ff;
+            color: #2563eb;
+        }
+
+        .translation {
+            display: none;
+            background: #f1f5ff;
+            border-left: 4px solid #2563eb;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: grid;
+            gap: 13px;
+        }
+
+        .option {
+            border: 1px solid #e0e4eb;
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: .2s;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: #2563eb;
+            background: #f7faff;
+        }
+
+        .option.selected {
+            border-color: #2563eb;
+            background: #eef4ff;
+        }
+
+        .option input {
+            accent-color: #2563eb;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .previous {
+            background: #eef0f4;
+            color: #333;
+        }
+
+        .next {
+            background: #2563eb;
+            color: white;
+        }
+
+        .submit {
+            background: #16a34a;
+            color: white;
+        }
+
+        /* ================= RESULT ================= */
+
+        .result-section {
+            display: none;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 22px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(0,0,0,.07);
+        }
+
+        .result-icon {
+            font-size: 55px;
+            margin-bottom: 12px;
+        }
+
+        .result-card h2 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .score {
+            font-size: 52px;
+            font-weight: 900;
+            color: #2563eb;
+            margin: 15px 0;
+        }
+
+        .percentage {
+            font-size: 18px;
+            color: #667085;
+        }
+
+        .result-message {
+            margin: 18px auto;
+            max-width: 500px;
+            color: #596275;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .result-btn {
+            padding: 13px 22px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .retake {
+            background: #2563eb;
+            color: white;
+        }
+
+        .home {
+            background: #eef0f4;
+            color: #333;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 700px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .hero h1 {
+                font-size: 29px;
+            }
+
+            .setup-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .setup-card {
+                padding: 20px;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 19px;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+
+            .score {
+                font-size: 43px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+    <div class="logo">Gyaan AI</div>
+
+    <a href="/" class="back-btn">
+    ← Back
+</a>
+</nav>
+
+
+<main class="container">
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+        <h1>Test Your <span>Knowledge</span></h1>
+        <p>Select your class and subject to start a 20-question quiz.</p>
+    </section>
+
+
+    <!-- ================= SETUP ================= -->
+
+    <section id="setupSection" class="setup-card">
+
+        <div class="setup-grid">
+
+            <div class="field">
+                <label>Select Class</label>
+
+                <select id="classSelect">
+                    <option value="">Choose Class</option>
+                    <option value="5">Class 5</option>
+                    <option value="6">Class 6</option>
+                    <option value="7">Class 7</option>
+                    <option value="8">Class 8</option>
+                    <option value="9">Class 9</option>
+                    <option value="10">Class 10</option>
+                    <option value="11">Class 11</option>
+                    <option value="12">Class 12</option>
+                </select>
+            </div>
+
+
+            <div class="field">
+                <label>Select Subject</label>
+
+                <select id="subjectSelect">
+
+                    <option value="">Choose Subject</option>
+
+                    <option value="math">
+                        Mathematics
+                    </option>
+
+                    <option value="science">
+                        Science
+                    </option>
+
+                    <option value="geography">
+                        Geography
+                    </option>
+
+                    <option value="physics">
+                        Physics
+                    </option>
+
+                    <option value="computer">
+                        Computer Science
+                    </option>
+
+                    <option value="marathi">
+                        Marathi
+                    </option>
+
+                    <option value="hindi">
+                        Hindi
+                    </option>
+
+                </select>
+            </div>
+
+        </div>
+
+
+        <button class="start-btn" onclick="startQuiz()">
+            Start 20 Questions Quiz →
+        </button>
+
+    </section>
+
+
+    <!-- ================= QUIZ ================= -->
+
+    <section id="quizSection" class="quiz-section">
+
+        <div class="quiz-header">
+
+            <div>
+                <div class="quiz-title" id="quizTitle">
+                    Mathematics
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progress" class="progress"></div>
+                </div>
+            </div>
+
+            <div class="progress-text" id="progressText">
+                Question 1 / 20
+            </div>
+
+        </div>
+
+
+        <div class="question-card">
+
+            <div class="question-number" id="questionNumber">
+                QUESTION 1
+            </div>
+
+            <div class="question-text" id="questionText">
+                Question goes here
+            </div>
+
+
+            <div class="question-actions">
+
+                <button class="small-btn" onclick="speakQuestion()">
+                    🔊 Listen
+                </button>
+
+                <button class="small-btn" onclick="translateQuestion()">
+                    🌐 Translate
+                </button>
+
+            </div>
+
+
+            <div id="translationBox" class="translation"></div>
+
+
+            <div id="options" class="options"></div>
+
+
+            <div class="navigation">
+
+                <button
+                    id="prevBtn"
+                    class="nav-btn previous"
+                    onclick="previousQuestion()">
+                    ← Previous
+                </button>
+
+                <button
+                    id="nextBtn"
+                    class="nav-btn next"
+                    onclick="nextQuestion()">
+                    Next →
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RESULT ================= -->
+
+    <section id="resultSection" class="result-section">
+
+        <div class="result-card">
+
+            <div id="resultIcon" class="result-icon">
+                🏆
+            </div>
+
+            <h2 id="resultTitle">
+                Excellent!
+            </h2>
+
+            <div class="score">
+                <span id="correctScore">0</span>
+                /
+                <span>20</span>
+            </div>
+
+            <div class="percentage">
+                Percentage:
+                <strong id="percentage">
+                    0%
+                </strong>
+            </div>
+
+            <p class="result-message" id="resultMessage">
+                Great work!
+            </p>
+
+
+            <div class="result-buttons">
+
+                <button
+                    class="result-btn retake"
+                    onclick="retakeQuiz()">
+                    🔄 Retake Quiz
+                </button>
+
+                <button
+                    class="result-btn home"
+                    onclick="goHome()">
+                    ← Back to Quiz
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+    /* =====================================================
+       QUIZ DATA
+       20 QUESTIONS FOR EACH SUBJECT
+       ===================================================== */
+
+    const questionBank = {
+
+        math: [
+
+            ["What is 25 + 35?", ["50","60","70","55"], "60"],
+            ["What is 100 - 45?", ["45","55","65","50"], "55"],
+            ["What is 8 × 7?", ["54","56","64","48"], "56"],
+            ["What is 81 ÷ 9?", ["7","8","9","10"], "9"],
+            ["What is 1/2 + 1/2?", ["1/2","1","2","0"], "1"],
+            ["What is the square of 5?", ["10","15","20","25"], "25"],
+            ["How many sides does a triangle have?", ["2","3","4","5"], "3"],
+            ["What is 20% of 100?", ["10","20","25","30"], "20"],
+            ["What is the perimeter of a square with side 5 cm?", ["10 cm","15 cm","20 cm","25 cm"], "20 cm"],
+            ["What is 12 × 12?", ["124","144","132","154"], "144"],
+            ["What is the value of π approximately?", ["2.14","3.14","4.14","5.14"], "3.14"],
+            ["What is 15²?", ["125","200","225","250"], "225"],
+            ["What is 3/4 as a decimal?", ["0.25","0.50","0.75","1.25"], "0.75"],
+            ["What is the LCM of 4 and 6?", ["8","10","12","24"], "12"],
+            ["What is the HCF of 12 and 18?", ["3","6","9","12"], "6"],
+            ["If x + 5 = 12, what is x?", ["5","6","7","8"], "7"],
+            ["What is 2³?", ["4","6","8","10"], "8"],
+            ["What is the area of a rectangle 10 cm × 5 cm?", ["15 cm²","30 cm²","50 cm²","100 cm²"], "50 cm²"],
+            ["What is 50% of 80?", ["20","30","40","50"], "40"],
+            ["What is the next prime number after 7?", ["8","9","10","11"], "11"]
+
+        ],
+
+
+        science: [
+
+            ["Which organ pumps blood?", ["Lungs","Heart","Kidney","Brain"], "Heart"],
+            ["Which gas do humans breathe in?", ["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"], "Oxygen"],
+            ["What is the boiling point of water?", ["50°C","75°C","100°C","150°C"], "100°C"],
+            ["Which planet is known as the Red Planet?", ["Earth","Mars","Venus","Jupiter"], "Mars"],
+            ["What is the basic unit of life?", ["Atom","Cell","Organ","Tissue"], "Cell"],
+            ["Which part of a plant absorbs water?", ["Flower","Leaf","Root","Fruit"], "Root"],
+            ["What force pulls objects toward Earth?", ["Magnetic force","Gravity","Friction","Electric force"], "Gravity"],
+            ["Which vitamin is produced with sunlight exposure?", ["Vitamin A","Vitamin B","Vitamin C","Vitamin D"], "Vitamin D"],
+            ["What is H₂O?", ["Oxygen","Hydrogen","Water","Carbon dioxide"], "Water"],
+            ["Which organ helps humans breathe?", ["Heart","Lungs","Liver","Stomach"], "Lungs"],
+            ["Which is a renewable source of energy?", ["Coal","Petroleum","Solar energy","Natural gas"], "Solar energy"],
+            ["Which state of matter has a fixed shape?", ["Liquid","Gas","Solid","Plasma"], "Solid"],
+            ["What is photosynthesis?", ["Food production by plants","Digestion","Respiration","Movement"], "Food production by plants"],
+            ["Which blood cells fight infection?", ["Red blood cells","White blood cells","Platelets","Plasma"], "White blood cells"],
+            ["What is the center of an atom called?", ["Electron","Proton","Nucleus","Neutron"], "Nucleus"],
+            ["Which gas is most abundant in Earth's atmosphere?", ["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"], "Nitrogen"],
+            ["Which system controls body activities?", ["Digestive system","Nervous system","Respiratory system","Skeletal system"], "Nervous system"],
+            ["Which material is a good conductor of electricity?", ["Wood","Plastic","Copper","Rubber"], "Copper"],
+            ["What is evaporation?", ["Liquid changing into gas","Gas changing into liquid","Solid changing into liquid","Liquid changing into solid"], "Liquid changing into gas"],
+            ["Which part of the eye controls the amount of light entering?", ["Retina","Iris","Lens","Cornea"], "Iris"]
+
+        ],
+
+
+        geography: [
+
+            ["Which is the largest continent?", ["Africa","Asia","Europe","Australia"], "Asia"],
+            ["Which is the largest ocean?", ["Atlantic","Indian","Pacific","Arctic"], "Pacific"],
+            ["What is the capital of India?", ["Mumbai","Delhi","Kolkata","Chennai"], "Delhi"],
+            ["Which imaginary line divides Earth into Northern and Southern Hemispheres?", ["Tropic of Cancer","Equator","Prime Meridian","Arctic Circle"], "Equator"],
+            ["Which is the highest mountain in the world?", ["K2","Mount Everest","Kangchenjunga","Makalu"], "Mount Everest"],
+            ["Which desert is the largest hot desert?", ["Gobi","Sahara","Thar","Kalahari"], "Sahara"],
+            ["Which river is associated with Egypt?", ["Nile","Amazon","Ganga","Yangtze"], "Nile"],
+            ["Which continent is known as the Dark Continent?", ["Asia","Africa","Europe","South America"], "Africa"],
+            ["Which line passes through Greenwich?", ["Equator","Prime Meridian","Tropic of Cancer","Tropic of Capricorn"], "Prime Meridian"],
+            ["Which country has the largest area?", ["India","China","Russia","Canada"], "Russia"],
+            ["Which ocean lies between Africa and Australia?", ["Atlantic","Indian","Pacific","Arctic"], "Indian"],
+            ["Which Indian state has the longest coastline?", ["Kerala","Gujarat","Goa","Odisha"], "Gujarat"],
+            ["Which type of rainfall occurs when moist air rises over mountains?", ["Convectional","Orographic","Cyclonic","Frontal"], "Orographic"],
+            ["What is a map scale used for?", ["Showing direction only","Showing distance relationship","Showing temperature","Showing rainfall"], "Showing distance relationship"],
+            ["Which layer of Earth is the outermost?", ["Core","Mantle","Crust","Inner core"], "Crust"],
+            ["What is an earthquake's point of origin inside Earth called?", ["Epicenter","Focus","Crater","Fault line"], "Focus"],
+            ["Which instrument measures atmospheric pressure?", ["Thermometer","Barometer","Hygrometer","Anemometer"], "Barometer"],
+            ["Which winds change direction seasonally in South Asia?", ["Trade winds","Monsoon winds","Polar winds","Westerlies"], "Monsoon winds"],
+            ["Which is a landform created by river deposition?", ["Delta","Volcano","Plateau","Canyon"], "Delta"],
+            ["What does latitude measure?", ["Distance east/west","Distance north/south of Equator","Height above sea","Ocean depth"], "Distance north/south of Equator"]
+
+        ],
+
+
+        physics: [
+
+            ["What is the SI unit of force?", ["Joule","Newton","Watt","Pascal"], "Newton"],
+            ["What is the SI unit of energy?", ["Newton","Joule","Watt","Volt"], "Joule"],
+            ["What is speed?", ["Distance/time","Time/distance","Mass/volume","Force/area"], "Distance/time"],
+            ["What force opposes motion?", ["Gravity","Friction","Magnetism","Buoyancy"], "Friction"],
+            ["What is the SI unit of power?", ["Watt","Joule","Newton","Ohm"], "Watt"],
+            ["What instrument measures temperature?", ["Barometer","Thermometer","Ammeter","Voltmeter"], "Thermometer"],
+            ["What is acceleration?", ["Change in velocity per unit time","Distance only","Mass per volume","Force only"], "Change in velocity per unit time"],
+            ["What is the SI unit of electric current?", ["Volt","Ampere","Ohm","Watt"], "Ampere"],
+            ["Which device converts electrical energy into mechanical energy?", ["Motor","Generator","Battery","Transformer"], "Motor"],
+            ["What is the unit of resistance?", ["Volt","Ampere","Ohm","Watt"], "Ohm"],
+            ["Light travels fastest in which medium?", ["Water","Glass","Air","Vacuum"], "Vacuum"],
+            ["What type of energy is stored in a stretched spring?", ["Chemical","Elastic potential","Nuclear","Thermal"], "Elastic potential"],
+            ["What is the approximate acceleration due to gravity on Earth?", ["4.8 m/s²","9.8 m/s²","15.8 m/s²","20.8 m/s²"], "9.8 m/s²"],
+            ["Which lens is thicker at the center?", ["Concave","Convex","Plane","Cylindrical"], "Convex"],
+            ["Which phenomenon explains a rainbow?", ["Reflection only","Dispersion of light","Magnetism","Conduction"], "Dispersion of light"],
+            ["What is momentum equal to?", ["Mass × velocity","Force × distance","Mass ÷ velocity","Energy × time"], "Mass × velocity"],
+            ["Which wave requires a medium to travel?", ["Light wave","Sound wave","Radio wave","Electromagnetic wave"], "Sound wave"],
+            ["What is density?", ["Mass/volume","Volume/mass","Force/area","Distance/time"], "Mass/volume"],
+            ["Which law states that every action has an equal and opposite reaction?", ["Newton's First Law","Newton's Second Law","Newton's Third Law","Ohm's Law"], "Newton's Third Law"],
+            ["What happens to resistance when a conductor's length increases, assuming other factors stay constant?", ["It decreases","It increases","It becomes zero","It remains exactly the same"], "It increases"]
+
+        ],
+
+
+        computer: [
+
+            ["What does CPU stand for?", ["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Processing User"], "Central Processing Unit"],
+            ["Which language is used to structure web pages?", ["HTML","CSS","SQL","Python"], "HTML"],
+            ["Which language is mainly used for styling web pages?", ["HTML","CSS","Java","SQL"], "CSS"],
+            ["Which language adds interactivity to web pages?", ["HTML","CSS","JavaScript","SQL"], "JavaScript"],
+            ["What does RAM stand for?", ["Random Access Memory","Read Access Machine","Rapid Application Memory","Random Application Module"], "Random Access Memory"],
+            ["Which is an operating system?", ["Windows","Chrome","Google","HTML"], "Windows"],
+            ["What does URL stand for?", ["Uniform Resource Locator","Universal Read Link","User Resource Line","Uniform Routing Link"], "Uniform Resource Locator"],
+            ["Which database is commonly used with MongoDB?", ["Document database","Graphical editor","Operating system","Compiler"], "Document database"],
+            ["What symbol starts a comment in JavaScript for a single line?", ["//","##","<!--","**"], "//"],
+            ["Which data type stores true or false?", ["String","Boolean","Integer","Array"], "Boolean"],
+            ["What does HTML stand for?", ["HyperText Markup Language","HighText Machine Language","Hyper Transfer Main Link","Home Tool Markup Language"], "HyperText Markup Language"],
+            ["Which protocol is used for secure web browsing?", ["HTTP","HTTPS","FTP","SMTP"], "HTTPS"],
+            ["What is an algorithm?", ["Step-by-step procedure","Computer screen","Programming language","Database"], "Step-by-step procedure"],
+            ["Which structure follows LIFO?", ["Queue","Stack","Array","Graph"], "Stack"],
+            ["Which structure follows FIFO?", ["Stack","Queue","Tree","Graph"], "Queue"],
+            ["What does SQL commonly manage?", ["Databases","Images only","Operating systems","Hardware"], "Databases"],
+            ["Which is a Python file extension?", [".py",".html",".css",".java"], ".py"],
+            ["What does API stand for?", ["Application Programming Interface","Advanced Program Internet","Application Process Input","Automated Programming Instruction"], "Application Programming Interface"],
+            ["What is Git mainly used for?", ["Version control","Video editing","Web hosting only","Database storage"], "Version control"],
+            ["Which technology is used to make websites responsive?", ["CSS media queries","SQL joins","MongoDB collections","Python loops"], "CSS media queries"]
+
+        ],
+
+
+        marathi: [
+
+            ["मराठी भाषेची लिपी कोणती आहे?", ["देवनागरी","रोमन","गुरुमुखी","उर्दू"], "देवनागरी"],
+            ["'फूल' या शब्दाचे अनेकवचन काय आहे?", ["फुले","फुला","फुली","फुल"], "फुले"],
+            ["'सुंदर' हा कोणता शब्दप्रकार आहे?", ["नाम","विशेषण","क्रियापद","सर्वनाम"], "विशेषण"],
+            ["'तो शाळेत जातो.' या वाक्यात क्रियापद कोणते?", ["तो","शाळेत","जातो","या"], "जातो"],
+            ["'मी' हे कोणते सर्वनाम आहे?", ["प्रथम पुरुष","द्वितीय पुरुष","तृतीय पुरुष","नाम"], "प्रथम पुरुष"],
+            ["'आकाश' या शब्दाचा समानार्थी शब्द कोणता?", ["नभ","पाणी","भूमी","वारा"], "नभ"],
+            ["'मोठा' या शब्दाचा विरुद्धार्थी शब्द कोणता?", ["लहान","उंच","जाड","लांब"], "लहान"],
+            ["'घर' हे कोणते नाम आहे?", ["सामान्यनाम","भाववाचक नाम","विशेषनाम","सर्वनाम"], "सामान्यनाम"],
+            ["'राम धावतो.' या वाक्यात कर्ता कोण आहे?", ["राम","धावतो","वाक्य","नाही"], "राम"],
+            ["'पाणी' या शब्दाचे लिंग कोणते?", ["पुल्लिंग","स्त्रीलिंग","नपुंसकलिंग","उभयलिंग"], "नपुंसकलिंग"],
+            ["'जल' हा कोणत्या शब्दाचा समानार्थी आहे?", ["पाणी","आकाश","अग्नी","वारा"], "पाणी"],
+            ["'सत्य' चा विरुद्धार्थी शब्द कोणता?", ["खोटे","सुंदर","चांगले","मोठे"], "खोटे"],
+            ["'मुलगा' या शब्दाचे स्त्रीलिंग काय?", ["मुलगी","मुलगे","मुलगा","मुलांचे"], "मुलगी"],
+            ["'पक्षी उडतो.' या वाक्यात नाम कोणते?", ["पक्षी","उडतो","या","वाक्यात"], "पक्षी"],
+            ["'हळूहळू' हा कोणता शब्दप्रकार आहे?", ["क्रियाविशेषण","नाम","सर्वनाम","विशेषण"], "क्रियाविशेषण"],
+            ["'आई' या शब्दाचे लिंग कोणते?", ["पुल्लिंग","स्त्रीलिंग","नपुंसकलिंग","उभयलिंग"], "स्त्रीलिंग"],
+            ["'ज्ञान' या शब्दाचा विरुद्धार्थी शब्द कोणता?", ["अज्ञान","शिक्षण","बुद्धी","विद्या"], "अज्ञान"],
+            ["'शाळा' या शब्दाचे अनेकवचन काय?", ["शाळा","शाळे","शाळांना","शाळी"], "शाळा"],
+            ["'तो पुस्तक वाचतो.' या वाक्यात कर्म कोणते?", ["तो","पुस्तक","वाचतो","या"], "पुस्तक"],
+            ["मराठीतील स्वरांमध्ये खालीलपैकी कोणता येतो?", ["अ","क","त","प"], "अ"]
+
+        ],
+
+
+        hindi: [
+
+            ["'राम स्कूल जाता है।' वाक्य में कर्ता कौन है?", ["राम","स्कूल","जाता","है"], "राम"],
+            ["'सुंदर' शब्द कौन सा शब्द है?", ["संज्ञा","विशेषण","क्रिया","सर्वनाम"], "विशेषण"],
+            ["'मैं' कौन सा सर्वनाम है?", ["पुरुषवाचक","निजवाचक","प्रश्नवाचक","संबंधवाचक"], "पुरुषवाचक"],
+            ["'लड़का' का स्त्रीलिंग क्या है?", ["लड़की","लड़के","लड़कियाँ","लड़कापन"], "लड़की"],
+            ["'दिन' का विलोम शब्द क्या है?", ["सुबह","रात","शाम","दोपहर"], "रात"],
+            ["'जल' का पर्यायवाची शब्द क्या है?", ["पानी","आग","हवा","धरती"], "पानी"],
+            ["'बच्चे खेल रहे हैं।' वाक्य में क्रिया कौन सी है?", ["बच्चे","खेल रहे हैं","हैं","वाक्य"], "खेल रहे हैं"],
+            ["'ईमानदार' का विलोम क्या है?", ["सच्चा","बेईमान","अच्छा","सरल"], "बेईमान"],
+            ["'पुस्तक' का बहुवचन क्या है?", ["पुस्तकें","पुस्तका","पुस्तकी","पुस्तक का"], "पुस्तकें"],
+            ["'गाय' कौन सा लिंग है?", ["पुल्लिंग","स्त्रीलिंग","नपुंसकलिंग","कोई नहीं"], "स्त्रीलिंग"],
+            ["'राम ने खाना खाया।' इसमें कर्म क्या है?", ["राम","ने","खाना","खाया"], "खाना"],
+            ["'धीरे-धीरे' कौन सा क्रिया विशेषण है?", ["रीतिवाचक","कालवाचक","स्थानवाचक","प्रश्नवाचक"], "रीतिवाचक"],
+            ["'सूर्य' का पर्यायवाची कौन सा है?", ["रवि","जल","पवन","धरा"], "रवि"],
+            ["'अंधकार' का विलोम क्या है?", ["रात","प्रकाश","छाया","काला"], "प्रकाश"],
+            ["'मोहन पढ़ता है।' में क्रिया कौन सी है?", ["मोहन","पढ़ता है","में","है"], "पढ़ता है"],
+            ["'हम' कौन सा पुरुष है?", ["उत्तम पुरुष","मध्यम पुरुष","अन्य पुरुष","कोई नहीं"], "उत्तम पुरुष"],
+            ["'फूल' का पर्यायवाची क्या है?", ["पुष्प","पत्ता","फल","बीज"], "पुष्प"],
+            ["'बड़ा' का विलोम क्या है?", ["ऊँचा","छोटा","लंबा","मोटा"], "छोटा"],
+            ["'सीता बाजार गई।' में कर्ता कौन है?", ["सीता","बाजार","गई","में"], "सीता"],
+            ["हिंदी भाषा की प्रमुख लिपि कौन सी है?", ["देवनागरी","रोमन","गुरुमुखी","तमिल"], "देवनागरी"]
+
+        ]
+
+    };
+
+
+    /* =====================================================
+       VARIABLES
+       ===================================================== */
+
+    let currentQuestion = 0;
+    let selectedAnswers = [];
+    let quizQuestions = [];
+    let selectedClass = "";
+    let selectedSubject = "";
+
+
+    const subjectNames = {
+        math: "Mathematics",
+        science: "Science",
+        geography: "Geography",
+        physics: "Physics",
+        computer: "Computer Science",
+        marathi: "Marathi",
+        hindi: "Hindi"
+    };
+
+
+    /* =====================================================
+       START QUIZ
+       ===================================================== */
+
+    function startQuiz() {
+
+        selectedClass =
+            document.getElementById("classSelect").value;
+
+        selectedSubject =
+            document.getElementById("subjectSelect").value;
+
+
+        if (!selectedClass || !selectedSubject) {
+
+            alert("Please select Class and Subject first.");
+
+            return;
+        }
+
+
+        quizQuestions =
+            questionBank[selectedSubject].map(item => {
+
+                return {
+                    question: item[0],
+                    options: item[1],
+                    answer: item[2]
+                };
+
+            });
+
+
+        selectedAnswers =
+            new Array(quizQuestions.length).fill(null);
+
+        currentQuestion = 0;
+
+
+        document.getElementById("setupSection").style.display =
+            "none";
+
+        document.getElementById("quizSection").style.display =
+            "block";
+
+        document.getElementById("resultSection").style.display =
+            "none";
+
+
+        document.getElementById("quizTitle").innerText =
+            subjectNames[selectedSubject] +
+            " • Class " +
+            selectedClass;
+
+
+        showQuestion();
+    }
+
+
+    /* =====================================================
+       SHOW QUESTION
+       ===================================================== */
+
+    function showQuestion() {
+
+        const q = quizQuestions[currentQuestion];
+
+
+        document.getElementById("questionNumber").innerText =
+            "QUESTION " + (currentQuestion + 1);
+
+
+        document.getElementById("questionText").innerText =
+            q.question;
+
+
+        document.getElementById("progressText").innerText =
+            "Question " +
+            (currentQuestion + 1) +
+            " / " +
+            quizQuestions.length;
+
+
+        const percentage =
+            ((currentQuestion + 1) /
+            quizQuestions.length) * 100;
+
+
+        document.getElementById("progress").style.width =
+            percentage + "%";
+
+
+        document.getElementById("translationBox").style.display =
+            "none";
+
+
+        const optionsBox =
+            document.getElementById("options");
+
+
+        optionsBox.innerHTML = "";
+
+
+        q.options.forEach((option, index) => {
+
+            const label =
+                document.createElement("label");
+
+            label.className = "option";
+
+
+            if (selectedAnswers[currentQuestion] === option) {
+                label.classList.add("selected");
+            }
+
+
+            label.innerHTML = `
+                <input
+                    type="radio"
+                    name="answer"
+                    value="${escapeHTML(option)}"
+                    ${selectedAnswers[currentQuestion] === option ? "checked" : ""}
+                >
+
+                <span>${escapeHTML(option)}</span>
+            `;
+
+
+            label.onclick = function() {
+
+                selectedAnswers[currentQuestion] =
+                    option;
+
+                document
+                    .querySelectorAll(".option")
+                    .forEach(el =>
+                        el.classList.remove("selected")
+                    );
+
+                label.classList.add("selected");
+            };
+
+
+            optionsBox.appendChild(label);
+
+        });
+
+
+        document.getElementById("prevBtn").style.visibility =
+            currentQuestion === 0
+                ? "hidden"
+                : "visible";
+
+
+        const nextBtn =
+            document.getElementById("nextBtn");
+
+
+        if (currentQuestion === quizQuestions.length - 1) {
+
+            nextBtn.innerText =
+                "Submit Quiz ✓";
+
+            nextBtn.className =
+                "nav-btn submit";
+
+            nextBtn.onclick =
+                submitQuiz;
+
+        } else {
+
+            nextBtn.innerText =
+                "Next →";
+
+            nextBtn.className =
+                "nav-btn next";
+
+            nextBtn.onclick =
+                nextQuestion;
+        }
+
+    }
+
+
+    /* =====================================================
+       NEXT QUESTION
+       ===================================================== */
+
+    function nextQuestion() {
+
+        if (!selectedAnswers[currentQuestion]) {
+
+            alert("Please select an answer.");
+
+            return;
+        }
+
+
+        if (currentQuestion <
+            quizQuestions.length - 1) {
+
+            currentQuestion++;
+
+            showQuestion();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PREVIOUS
+       ===================================================== */
+
+    function previousQuestion() {
+
+        if (currentQuestion > 0) {
+
+            currentQuestion--;
+
+            showQuestion();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SUBMIT QUIZ
+       ===================================================== */
+
+    async function submitQuiz() {
+
+        if (!selectedAnswers[currentQuestion]) {
+
+            alert("Please select an answer.");
+
+            return;
+        }
+
+
+        let score = 0;
+
+
+        quizQuestions.forEach((q, index) => {
+
+            if (selectedAnswers[index] === q.answer) {
+
+                score++;
+
+            }
+
+        });
+
+
+        const total =
+            quizQuestions.length;
+
+
+        const percentage =
+            Math.round((score / total) * 100);
+
+
+        let title;
+        let icon;
+        let message;
+
+
+        if (percentage >= 85) {
+
+            title = "Excellent!";
+
+            icon = "🏆";
+
+            message =
+                "Outstanding performance! Your preparation and understanding are excellent.";
+
+        }
+
+        else if (percentage >= 60) {
+
+            title = "Good Job!";
+
+            icon = "👏";
+
+            message =
+                "Good performance! Keep practicing and you can reach the excellent level.";
+
+        }
+
+        else {
+
+            title = "Needs Improvement";
+
+            icon = "📚";
+
+            message =
+                "Keep learning and practicing. Review the topics and try the quiz again.";
+
+        }
+
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            try {
+                await fetch((window.location.hostname === "gyaan-ai-backend.onrender.com" ? "https://gyaan-ai-backend.onrender.com" : "") + "/api/quiz-attempts", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token
+                    },
+                    body: JSON.stringify({
+                        subject: subjectNames[selectedSubject] || selectedSubject,
+                        classLevel: selectedClass,
+                        score,
+                        total,
+                        percentage,
+                        summary: message
+                    })
+                });
+            } catch (error) {
+                console.error("Unable to save quiz attempt:", error);
+            }
+        }
+
+
+        document.getElementById("quizSection").style.display =
+            "none";
+
+        document.getElementById("resultSection").style.display =
+            "block";
+
+
+        document.getElementById("resultIcon").innerText =
+            icon;
+
+        document.getElementById("resultTitle").innerText =
+            title;
+
+        document.getElementById("correctScore").innerText =
+            score;
+
+        document.getElementById("percentage").innerText =
+            percentage + "%";
+
+        document.getElementById("resultMessage").innerText =
+            message;
+
+    }
+
+
+    /* =====================================================
+       RETAKE
+       ===================================================== */
+
+    function retakeQuiz() {
+
+        selectedAnswers =
+            new Array(quizQuestions.length).fill(null);
+
+        currentQuestion = 0;
+
+        document.getElementById("resultSection").style.display =
+            "none";
+
+        document.getElementById("quizSection").style.display =
+            "block";
+
+        showQuestion();
+
+    }
+
+
+    /* =====================================================
+       HOME
+       ===================================================== */
+
+    function goHome() {
+
+        document.getElementById("resultSection").style.display =
+            "none";
+
+        document.getElementById("quizSection").style.display =
+            "none";
+
+        document.getElementById("setupSection").style.display =
+            "block";
+
+    }
+
+
+    /* =====================================================
+       BACK BUTTON
+       ===================================================== */
+
+    function goBack() {
+
+        if (
+            document.getElementById("quizSection").style.display ===
+            "block"
+        ) {
+
+            if (
+                confirm(
+                    "Are you sure you want to leave this quiz?"
+                )
+            ) {
+
+                goHome();
+
+            }
+
+            return;
+        }
+
+
+        window.location.href = "/";
+
+    }
+
+
+    /* =====================================================
+       VOICE
+       ===================================================== */
+
+    function speakQuestion() {
+
+        if (!("speechSynthesis" in window)) {
+
+            alert(
+                "Voice is not supported in this browser."
+            );
+
+            return;
+        }
+
+
+        speechSynthesis.cancel();
+
+
+        const text =
+            quizQuestions[currentQuestion].question;
+
+
+        const utterance =
+            new SpeechSynthesisUtterance(text);
+
+
+        if (
+            selectedSubject === "marathi"
+        ) {
+
+            utterance.lang = "mr-IN";
+
+        }
+
+        else if (
+            selectedSubject === "hindi"
+        ) {
+
+            utterance.lang = "hi-IN";
+
+        }
+
+        else {
+
+            utterance.lang = "en-IN";
+
+        }
+
+
+        utterance.rate = 0.9;
+
+        speechSynthesis.speak(utterance);
+
+    }
+
+
+    /* =====================================================
+       TRANSLATION
+       ===================================================== */
+
+    async function translateQuestion() {
+
+        const question =
+            quizQuestions[currentQuestion].question;
+
+
+        const box =
+            document.getElementById("translationBox");
+
+
+        box.style.display = "block";
+
+        box.innerText =
+            "Translating...";
+
+
+        /*
+          MyMemory free translation API.
+          For production use, backend translation API
+          is recommended.
+        */
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "https://api.mymemory.translated.net/get?q=" +
+                    encodeURIComponent(question) +
+                    "&langpair=en|hi"
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                data &&
+                data.responseData &&
+                data.responseData.translatedText
+            ) {
+
+                box.innerHTML =
+                    "<strong>Hindi Translation:</strong><br>" +
+                    escapeHTML(
+                        data.responseData.translatedText
+                    );
+
+            } else {
+
+                box.innerText =
+                    "Translation unavailable.";
+
+            }
+
+        }
+
+        catch (error) {
+
+            box.innerText =
+                "Translation service unavailable. Please try again.";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SECURITY
+       ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+</script>
+
+</body>
+<script src="common.js"></script>
+</html>
+```
+
