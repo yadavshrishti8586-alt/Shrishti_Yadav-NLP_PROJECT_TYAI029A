@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/index.js", "use": "@vercel/node" },
+    { "src": "frontend/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/index.js" },
+    { "src": "/dashboard/?", "dest": "/frontend/Dashboard.Html" },
+    { "src": "/profile/?", "dest": "/frontend/Dashboard.Html" },
+    { "src": "/login/?", "dest": "/frontend/Login.Html" },
+    { "src": "/register/?", "dest": "/frontend/Register.Html" },
+    { "src": "/quiz/?", "dest": "/frontend/Quiz.Html" },
+    { "src": "/ai-tutor/?", "dest": "/frontend/AI%20Tutar.Html" },
+    { "src": "/study-materials/?", "dest": "/frontend/Study-Material.Html" },
+    { "src": "/upload-material/?", "dest": "/frontend/Upload-Material.Html" },
+    { "src": "/", "dest": "/frontend/index.html" },
+    { "src": "/(.*)", "dest": "/frontend/$1" }
+  ]
+}
