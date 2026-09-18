@@ -1,0 +1,2545 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Tutor | Gyaan AI Tutor</title>
+
+
+    <!-- =====================================================
+         MAIN CSS
+    ====================================================== -->
+
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/AI.css">
+
+
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- =====================================================
+         MARKDOWN
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
+
+    <!-- =====================================================
+         AI TUTOR INPUT OVERRIDE
+         Makes input area similar to your screenshot
+    ====================================================== -->
+
+    <style>
+
+        /* =========================================
+           CHAT INPUT AREA
+        ========================================== */
+
+        .chat-input-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 0;
+            margin-top: 12px;
+        }
+
+
+        /* =========================================
+           TEXT INPUT
+        ========================================== */
+
+        #chatInput {
+            flex: 1;
+            height: 64px;
+            min-width: 0;
+
+            border: 1.5px solid #c8d5ff;
+            border-radius: 18px;
+
+            padding: 0 20px;
+
+            font-family: "Inter", sans-serif;
+            font-size: 17px;
+            color: #172554;
+
+            outline: none;
+            background: #ffffff;
+
+            box-sizing: border-box;
+
+            transition: all 0.2s ease;
+        }
+
+
+        #chatInput::placeholder {
+            color: #7890c4;
+        }
+
+
+        #chatInput:focus {
+            border-color: #3157d5;
+            box-shadow: 0 0 0 3px rgba(49, 87, 213, 0.10);
+        }
+
+
+        /* =========================================
+           MICROPHONE BUTTON
+        ========================================== */
+
+        .mic-btn {
+            flex: 0 0 60px;
+
+            width: 60px;
+            height: 60px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: #3157d5;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+            box-shadow: 0 5px 15px rgba(49, 87, 213, 0.25);
+
+            transition: all 0.2s ease;
+        }
+
+
+        .mic-btn:hover {
+            transform: translateY(-2px);
+            background: #2448c4;
+        }
+
+
+        .mic-btn.active {
+            background: #e53935;
+            animation: micPulse 1.2s infinite;
+        }
+
+
+        @keyframes micPulse {
+
+            0% {
+                box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.45);
+            }
+
+            70% {
+                box-shadow: 0 0 0 14px rgba(229, 57, 53, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(229, 57, 53, 0);
+            }
+
+        }
+
+
+        /* =========================================
+           SEND BUTTON
+        ========================================== */
+
+        .send-btn {
+            flex: 0 0 auto;
+
+            height: 60px;
+            min-width: 125px;
+
+            border: none;
+            border-radius: 17px;
+
+            background: #3157d5;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            padding: 0 24px;
+
+            font-family: "Inter", sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow: 0 5px 15px rgba(49, 87, 213, 0.20);
+
+            transition: all 0.2s ease;
+        }
+
+
+        .send-btn:hover {
+            background: #2448c4;
+            transform: translateY(-2px);
+        }
+
+
+        .send-icon {
+            font-size: 22px;
+        }
+
+
+        /* =========================================
+           LISTENING BAR
+        ========================================== */
+
+        .listening-bar {
+            display: none;
+
+            align-items: center;
+            gap: 12px;
+
+            width: 100%;
+            min-height: 44px;
+
+            padding: 0 18px;
+
+            margin-top: 10px;
+
+            border-radius: 22px;
+
+            background: #eef1ff;
+            color: #3157d5;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            box-sizing: border-box;
+        }
+
+
+        .listening-bar.show {
+            display: flex;
+        }
+
+
+        .listening-dot {
+            width: 11px;
+            height: 11px;
+
+            border-radius: 50%;
+
+            background: #3157d5;
+
+            animation: listeningPulse 1s infinite;
+        }
+
+
+        @keyframes listeningPulse {
+
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.35;
+                transform: scale(1.35);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+        }
+
+
+        /* =========================================
+           MARKDOWN CHAT
+        ========================================== */
+
+        .msg-bubble p {
+            margin: 0 0 10px;
+            line-height: 1.6;
+        }
+
+
+        .msg-bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+
+        .msg-bubble strong {
+            font-weight: 700;
+        }
+
+
+        .msg-bubble h1,
+        .msg-bubble h2,
+        .msg-bubble h3 {
+            margin: 12px 0 8px;
+            line-height: 1.35;
+        }
+
+
+        .msg-bubble h1 {
+            font-size: 1.35rem;
+        }
+
+
+        .msg-bubble h2 {
+            font-size: 1.2rem;
+        }
+
+
+        .msg-bubble h3 {
+            font-size: 1.05rem;
+        }
+
+
+        .msg-bubble ul,
+        .msg-bubble ol {
+            margin: 8px 0 10px;
+            padding-left: 24px;
+        }
+
+
+        .msg-bubble li {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+
+        .msg-bubble blockquote {
+            margin: 10px 0;
+            padding: 8px 12px;
+
+            border-left: 3px solid #3157d5;
+
+            background: #f1f4ff;
+
+            border-radius: 6px;
+        }
+
+
+        .msg-bubble code {
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #f1f1f1;
+            font-family: monospace;
+        }
+
+
+        .msg-bubble pre {
+            overflow-x: auto;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background: #f5f5f5;
+        }
+
+
+        .msg-bubble pre code {
+            padding: 0;
+            background: transparent;
+        }
+
+
+        /* =========================================
+           TYPING DOTS
+        ========================================== */
+
+        .typing-bubble {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+
+        .typing-bubble span {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #3157d5;
+
+            animation: typingAnimation 1.2s infinite;
+        }
+
+
+        .typing-bubble span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+
+        .typing-bubble span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+
+        @keyframes typingAnimation {
+
+            0%,
+            60%,
+            100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-4px);
+            }
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================== */
+
+        @media (max-width: 700px) {
+
+            .chat-input-bar {
+                gap: 7px;
+            }
+
+
+            #chatInput {
+                height: 54px;
+                font-size: 15px;
+                padding: 0 14px;
+                border-radius: 14px;
+            }
+
+
+            .mic-btn {
+                width: 52px;
+                height: 52px;
+                flex-basis: 52px;
+                font-size: 21px;
+            }
+
+
+            .send-btn {
+                height: 52px;
+                min-width: 52px;
+                width: 52px;
+
+                padding: 0;
+
+                border-radius: 14px;
+            }
+
+
+            .send-label {
+                display: none;
+            }
+
+
+            .send-icon {
+                font-size: 21px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+
+        <!-- LOGO -->
+
+        <a href="/" class="logo">
+
+            <div class="logo-icon">
+                ✦
+            </div>
+
+            <div class="logo-text">
+
+                <span>
+                    GYAAN
+                </span>
+
+                <small>
+                    AI TUTOR
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <!-- NAV LINKS -->
+
+        <div class="nav-links" id="navLinks">
+
+
+            <a href="/">
+                Home
+            </a>
+
+
+            <a href="/ai-tutor" class="active">
+                AI Tutor
+            </a>
+
+
+            <!-- LANGUAGE -->
+
+            <div class="language-menu" id="languageMenu">
+
+                <button
+                    class="language-btn"
+                    id="languageBtn"
+                    type="button">
+
+                    <span>🌐</span>
+
+                    <span id="selectedLanguage">
+                        English
+                    </span>
+
+                    <span class="arrow">
+                        ⌄
+                    </span>
+
+                </button>
+
+
+                <div
+                    class="language-dropdown"
+                    id="languageDropdown">
+
+
+                    <a href="#" data-lang="English">
+                        🇬🇧 English
+                    </a>
+
+
+                    <a href="#" data-lang="Hindi">
+                        🇮🇳 हिंदी
+                    </a>
+
+
+                    <a href="#" data-lang="Marathi">
+                        🇮🇳 मराठी
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <a href="/contact.html">
+                Contact
+            </a>
+
+        </div>
+
+
+        <!-- NAV ACTIONS -->
+
+        <div class="nav-actions">
+
+            <a
+                href="/login.html"
+                class="login-btn">
+
+                Login
+
+            </a>
+
+
+            <a
+                href="/profile.html"
+                class="profile-btn">
+
+                <span class="profile-icon">
+                    👤
+                </span>
+
+                Profile
+
+            </a>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button">
+
+            ☰
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     AI TUTOR
+====================================================== -->
+
+<main class="tutor-page">
+
+    <div class="tutor-shell">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="tutor-sidebar"
+            id="tutorSidebar">
+
+
+            <!-- SIDEBAR HEADER -->
+
+            <div class="sidebar-head">
+
+                <span>
+                    SUBJECTS
+                </span>
+
+
+                <button
+                    class="sidebar-close"
+                    id="sidebarClose"
+                    type="button">
+
+                    ✕
+
+                </button>
+
+            </div>
+
+
+            <!-- SUBJECTS -->
+
+            <div class="subject-list">
+
+
+                <button
+                    class="subject-item active"
+                    data-subject="General"
+                    type="button">
+
+                    <span class="subject-emoji">
+                        🤖
+                    </span>
+
+                    General
+
+                </button>
+
+
+                <button
+                    class="subject-item"
+                    data-subject="Maths"
+                    type="button">
+
+                    <span class="subject-emoji">
+                        📐
+                    </span>
+
+                    Maths
+
+                </button>
+
+
+                <button
+                    class="subject-item"
+                    data-subject="Science"
+                    type="button">
+
+                    <span class="subject-emoji">
+                        🔬
+                    </span>
+
+                    Science
+
+                </button>
+
+
+                <button
+                    class="subject-item"
+                    data-subject="Computer"
+                    type="button">
+
+                    <span class="subject-emoji">
+                        💻
+                    </span>
+
+                    Computer
+
+                </button>
+
+
+                <button
+                    class="subject-item"
+                    data-subject="English"
+                    type="button">
+
+                    <span class="subject-emoji">
+                        📖
+                    </span>
+
+                    English
+
+                </button>
+
+
+            </div>
+
+
+            <!-- SIDEBAR TIP -->
+
+            <div class="sidebar-tip">
+
+                <div class="sidebar-tip-icon">
+                    💡
+                </div>
+
+                <p>
+                    Tap the mic and ask your
+                    question out loud — in English,
+                    Hindi or Marathi.
+                </p>
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- =================================================
+             CHAT
+        ================================================== -->
+
+        <section class="tutor-chat">
+
+
+            <!-- CHAT HEADER -->
+
+            <div class="chat-header">
+
+
+                <button
+                    class="subjects-toggle"
+                    id="subjectsToggle"
+                    type="button">
+
+                    ☰
+
+                </button>
+
+
+                <div class="chat-header-info">
+
+
+                    <div class="chat-avatar">
+                        🤖
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Gyaan AI Tutor
+                        </strong>
+
+
+                        <span id="activeSubjectLabel">
+                            General • Online
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="chat-clear"
+                    id="clearChat"
+                    type="button">
+
+                    🗑 Clear
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CHAT BODY
+            ================================================== -->
+
+            <div
+                class="chat-body"
+                id="chatBody">
+
+
+                <div class="msg msg-bot">
+
+                    <div class="msg-avatar">
+                        🤖
+                    </div>
+
+
+                    <div class="msg-bubble">
+
+                        <p>
+                            Hello! I'm your
+                            <strong>AI Tutor</strong>.
+                        </p>
+
+                        <p>
+                            Ask me anything about
+                            Maths, Science, Computer
+                            or English — by typing
+                            or by voice.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 QUICK PROMPTS
+            ================================================== -->
+
+            <div
+                class="quick-prompts"
+                id="quickPrompts">
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LISTENING
+            ================================================== -->
+
+            <div
+                class="listening-bar"
+                id="listeningBar">
+
+
+                <span class="listening-dot">
+                </span>
+
+
+                <span id="listeningText">
+                    Listening... speak your question
+                </span>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 INPUT
+            ================================================== -->
+
+            <form
+                class="chat-input-bar"
+                id="chatForm">
+
+
+                <!-- MICROPHONE -->
+
+                <button
+                    type="button"
+                    class="mic-btn"
+                    id="micBtn"
+                    aria-label="Ask by voice"
+                    title="Ask by voice">
+
+                    🎤
+
+                </button>
+
+
+                <!-- INPUT -->
+
+                <input
+                    type="text"
+                    id="chatInput"
+                    placeholder="Ask your question..."
+                    autocomplete="off"
+                    maxlength="4000">
+
+
+                <!-- SEND -->
+
+                <button
+                    type="submit"
+                    class="send-btn"
+                    aria-label="Send"
+                    title="Send">
+
+
+                    <span class="send-icon">
+                        ➤
+                    </span>
+
+
+                    <span class="send-label">
+                        Send
+                    </span>
+
+
+                </button>
+
+
+            </form>
+
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+/* =====================================================
+   API CONFIGURATION
+====================================================== */
+
+/*
+   Local:
+   http://localhost:5000
+
+   Production:
+   https://gyaan-ai-backend.onrender.com
+*/
+
+const BACKEND_URL =
+    "https://gyaan-ai-backend.onrender.com";
+
+
+const currentHost =
+    window.location.hostname;
+
+
+/*
+   If frontend and backend are running together,
+   use relative API paths.
+
+   If frontend is deployed somewhere else,
+   use Render backend.
+*/
+
+const API_BASE =
+    (
+        currentHost === "localhost" ||
+        currentHost === "127.0.0.1" ||
+        currentHost === "gyaan-ai-backend.onrender.com"
+    )
+        ? ""
+        : BACKEND_URL;
+
+
+
+/* =====================================================
+   API RESPONSE
+====================================================== */
+
+async function readApiResponse(response) {
+
+    const text =
+        await response.text();
+
+
+    if (!text) {
+        return {};
+    }
+
+
+    try {
+
+        return JSON.parse(text);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Invalid API response:",
+            text
+        );
+
+
+        return {
+            message:
+                "The backend returned an invalid response."
+        };
+
+    }
+
+}
+
+
+
+/* =====================================================
+   MOBILE NAVBAR
+====================================================== */
+
+const menuToggle =
+    document.getElementById("menuToggle");
+
+
+const navLinks =
+    document.getElementById("navLinks");
+
+
+if (menuToggle && navLinks) {
+
+    menuToggle.addEventListener(
+        "click",
+        function () {
+
+            navLinks.classList.toggle("show");
+
+
+            menuToggle.textContent =
+                navLinks.classList.contains("show")
+                    ? "✕"
+                    : "☰";
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   LANGUAGE MENU
+====================================================== */
+
+const languageBtn =
+    document.getElementById("languageBtn");
+
+
+const languageMenu =
+    document.getElementById("languageMenu");
+
+
+const selectedLanguage =
+    document.getElementById("selectedLanguage");
+
+
+if (languageBtn && languageMenu) {
+
+    languageBtn.addEventListener(
+        "click",
+        function (event) {
+
+            event.stopPropagation();
+
+            languageMenu.classList.toggle("open");
+
+        }
+    );
+
+}
+
+
+document
+    .querySelectorAll(".language-dropdown a")
+    .forEach(function (option) {
+
+        option.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const language =
+                    option.dataset.lang;
+
+
+                selectedLanguage.textContent =
+                    language;
+
+
+                languageMenu.classList.remove(
+                    "open"
+                );
+
+            }
+        );
+
+    });
+
+
+document.addEventListener(
+    "click",
+    function () {
+
+        if (languageMenu) {
+
+            languageMenu.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   SIDEBAR
+====================================================== */
+
+const tutorSidebar =
+    document.getElementById("tutorSidebar");
+
+
+const subjectsToggle =
+    document.getElementById("subjectsToggle");
+
+
+const sidebarClose =
+    document.getElementById("sidebarClose");
+
+
+if (subjectsToggle) {
+
+    subjectsToggle.addEventListener(
+        "click",
+        function () {
+
+            tutorSidebar.classList.add("open");
+
+        }
+    );
+
+}
+
+
+if (sidebarClose) {
+
+    sidebarClose.addEventListener(
+        "click",
+        function () {
+
+            tutorSidebar.classList.remove("open");
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   SUBJECT PROMPTS
+====================================================== */
+
+const subjectPrompts = {
+
+    General: [
+        "What can you help me learn?",
+        "Explain AI in simple words",
+        "What is an algorithm?"
+    ],
+
+    Maths: [
+        "What is the Pythagorean theorem?",
+        "Solve 25% of 480",
+        "Explain algebraic expressions"
+    ],
+
+    Science: [
+        "What is photosynthesis?",
+        "Explain Newton's first law",
+        "How does the human heart work?"
+    ],
+
+    Computer: [
+        "What is a variable in coding?",
+        "Explain HTML and CSS",
+        "What is an algorithm?"
+    ],
+
+    English: [
+        "What is a noun?",
+        "Explain present tense",
+        "Help me improve this sentence"
+    ]
+
+};
+
+
+
+/* =====================================================
+   ELEMENTS
+====================================================== */
+
+const subjectItems =
+    document.querySelectorAll(
+        ".subject-item"
+    );
+
+
+const activeSubjectLabel =
+    document.getElementById(
+        "activeSubjectLabel"
+    );
+
+
+const chatBody =
+    document.getElementById(
+        "chatBody"
+    );
+
+
+const chatForm =
+    document.getElementById(
+        "chatForm"
+    );
+
+
+const chatInput =
+    document.getElementById(
+        "chatInput"
+    );
+
+
+const listeningBar =
+    document.getElementById(
+        "listeningBar"
+    );
+
+
+const listeningText =
+    document.getElementById(
+        "listeningText"
+    );
+
+
+const micBtn =
+    document.getElementById(
+        "micBtn"
+    );
+
+
+const clearChat =
+    document.getElementById(
+        "clearChat"
+    );
+
+
+const quickPrompts =
+    document.getElementById(
+        "quickPrompts"
+    );
+
+
+
+/* =====================================================
+   ESCAPE HTML
+====================================================== */
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        String(text ?? "");
+
+
+    return div.innerHTML;
+
+}
+
+
+
+/* =====================================================
+   MARKDOWN
+====================================================== */
+
+function renderMarkdown(text) {
+
+    text =
+        String(text ?? "");
+
+
+    if (!text) {
+        return "";
+    }
+
+
+    if (
+        typeof marked !== "undefined" &&
+        typeof DOMPurify !== "undefined"
+    ) {
+
+        const html =
+            marked.parse(
+                text,
+                {
+                    gfm: true,
+                    breaks: true
+                }
+            );
+
+
+        return DOMPurify.sanitize(
+            html
+        );
+
+    }
+
+
+    return escapeHtml(text)
+        .replace(/\n/g, "<br>");
+
+}
+
+
+
+/* =====================================================
+   ADD MESSAGE
+====================================================== */
+
+function addMessage(
+    text,
+    sender
+) {
+
+    const msg =
+        document.createElement("div");
+
+
+    msg.className =
+        "msg msg-" + sender;
+
+
+    const avatar =
+        document.createElement("div");
+
+
+    avatar.className =
+        "msg-avatar";
+
+
+    avatar.textContent =
+        sender === "bot"
+            ? "🤖"
+            : "👤";
+
+
+    const bubble =
+        document.createElement("div");
+
+
+    bubble.className =
+        "msg-bubble";
+
+
+    if (sender === "bot") {
+
+        bubble.innerHTML =
+            renderMarkdown(text);
+
+    }
+
+    else {
+
+        bubble.textContent =
+            String(text ?? "");
+
+    }
+
+
+    if (sender === "user") {
+
+        msg.appendChild(bubble);
+
+        msg.appendChild(avatar);
+
+    }
+
+    else {
+
+        msg.appendChild(avatar);
+
+        msg.appendChild(bubble);
+
+    }
+
+
+    chatBody.appendChild(msg);
+
+
+    chatBody.scrollTop =
+        chatBody.scrollHeight;
+
+}
+
+
+
+/* =====================================================
+   TYPING
+====================================================== */
+
+function showTyping() {
+
+    removeTyping();
+
+
+    const typing =
+        document.createElement("div");
+
+
+    typing.id =
+        "typingIndicator";
+
+
+    typing.className =
+        "msg msg-bot";
+
+
+    typing.innerHTML = `
+
+        <div class="msg-avatar">
+            🤖
+        </div>
+
+        <div class="msg-bubble typing-bubble">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+    `;
+
+
+    chatBody.appendChild(
+        typing
+    );
+
+
+    chatBody.scrollTop =
+        chatBody.scrollHeight;
+
+}
+
+
+function removeTyping() {
+
+    const typing =
+        document.getElementById(
+            "typingIndicator"
+        );
+
+
+    if (typing) {
+        typing.remove();
+    }
+
+}
+
+
+
+/* =====================================================
+   QUICK PROMPTS
+====================================================== */
+
+function updateQuickPrompts(subject) {
+
+    if (!quickPrompts) {
+        return;
+    }
+
+
+    quickPrompts.innerHTML =
+        "";
+
+
+    const prompts =
+        subjectPrompts[subject]
+        || subjectPrompts.General;
+
+
+    prompts.forEach(function (prompt) {
+
+        const button =
+            document.createElement("button");
+
+
+        button.type =
+            "button";
+
+
+        button.className =
+            "quick-chip";
+
+
+        button.textContent =
+            prompt;
+
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                sendMessage(prompt);
+
+            }
+        );
+
+
+        quickPrompts.appendChild(
+            button
+        );
+
+    });
+
+
+    quickPrompts.style.display =
+        "flex";
+
+}
+
+
+
+/* =====================================================
+   RESET CHAT
+====================================================== */
+
+function resetSubjectChat(subject) {
+
+    chatBody.innerHTML = `
+
+        <div class="msg msg-bot">
+
+            <div class="msg-avatar">
+                🤖
+            </div>
+
+            <div class="msg-bubble">
+
+                <p>
+                    You are now learning
+                    <strong>
+                        ${escapeHtml(subject)}
+                    </strong>.
+                </p>
+
+                <p>
+                    What would you like to ask?
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    updateQuickPrompts(subject);
+
+
+    loadChatHistory(subject);
+
+}
+
+
+
+/* =====================================================
+   SUBJECT CLICK
+====================================================== */
+
+subjectItems.forEach(function (item) {
+
+    item.addEventListener(
+        "click",
+        function () {
+
+
+            subjectItems.forEach(
+                function (i) {
+
+                    i.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            item.classList.add(
+                "active"
+            );
+
+
+            const subject =
+                item.dataset.subject;
+
+
+            activeSubjectLabel.textContent =
+                subject + " • Online";
+
+
+            if (tutorSidebar) {
+
+                tutorSidebar.classList.remove(
+                    "open"
+                );
+
+            }
+
+
+            resetSubjectChat(subject);
+
+        }
+    );
+
+});
+
+
+
+/* =====================================================
+   SEND MESSAGE
+====================================================== */
+
+async function sendMessage(text) {
+
+    const question =
+        String(text ?? "").trim();
+
+
+    if (!question) {
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem("token");
+
+
+    if (!token) {
+
+        addMessage(
+            "Please log in first to use the AI Tutor.",
+            "bot"
+        );
+
+        return;
+
+    }
+
+
+    addMessage(
+        question,
+        "user"
+    );
+
+
+    chatInput.value =
+        "";
+
+
+    if (quickPrompts) {
+
+        quickPrompts.style.display =
+            "none";
+
+    }
+
+
+    showTyping();
+
+
+    try {
+
+
+        const activeSubject =
+            document.querySelector(
+                ".subject-item.active"
+            );
+
+
+        const subject =
+            activeSubject
+                ? activeSubject.dataset.subject
+                : "General";
+
+
+        console.log(
+            "Sending AI Tutor request:",
+            {
+                subject,
+                question
+            }
+        );
+
+
+        const response =
+            await fetch(
+                API_BASE + "/api/chat",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " + token
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            question:
+                                question,
+
+                            subject:
+                                subject
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await readApiResponse(
+                response
+            );
+
+
+        removeTyping();
+
+
+        console.log(
+            "AI Tutor response:",
+            response.status,
+            data
+        );
+
+
+        /* ======================================
+           LOGIN EXPIRED
+        ======================================= */
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "token"
+            );
+
+
+            addMessage(
+                "Your login session has expired. Please log in again.",
+                "bot"
+            );
+
+
+            return;
+
+        }
+
+
+        /* ======================================
+           SERVER ERROR
+        ======================================= */
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.message ||
+                "Could not get an answer from the AI Tutor."
+
+            );
+
+        }
+
+
+        /* ======================================
+           SUCCESS
+        ======================================= */
+
+        if (data.answer) {
+
+            addMessage(
+                data.answer,
+                "bot"
+            );
+
+        }
+
+        else {
+
+            addMessage(
+                "The AI Tutor returned an empty answer.",
+                "bot"
+            );
+
+        }
+
+
+    }
+
+    catch (error) {
+
+        removeTyping();
+
+
+        console.error(
+            "AI Tutor Error:",
+            error
+        );
+
+
+        addMessage(
+
+            error.message ||
+            "Something went wrong. Please try again.",
+
+            "bot"
+
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   FORM SUBMIT
+====================================================== */
+
+if (chatForm) {
+
+    chatForm.addEventListener(
+        "submit",
+        function (event) {
+
+            event.preventDefault();
+
+
+            sendMessage(
+                chatInput.value
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   ENTER KEY
+====================================================== */
+
+if (chatInput) {
+
+    chatInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+
+                sendMessage(
+                    chatInput.value
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   CLEAR CHAT
+====================================================== */
+
+if (clearChat) {
+
+    clearChat.addEventListener(
+        "click",
+        async function () {
+
+
+            const token =
+                localStorage.getItem("token");
+
+
+            if (!token) {
+
+                showClearedMessage();
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_BASE + "/api/chats",
+                        {
+
+                            method:
+                                "DELETE",
+
+                            headers: {
+
+                                "Authorization":
+                                    "Bearer " + token
+
+                            }
+
+                        }
+                    );
+
+
+                const data =
+                    await readApiResponse(
+                        response
+                    );
+
+
+                if (response.status === 401) {
+
+                    localStorage.removeItem(
+                        "token"
+                    );
+
+
+                    throw new Error(
+                        "Please log in again."
+                    );
+
+                }
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+
+                        data.message ||
+                        "Could not clear chat history."
+
+                    );
+
+                }
+
+
+                showClearedMessage();
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Clear chat error:",
+                    error
+                );
+
+
+                addMessage(
+
+                    error.message ||
+                    "Could not clear chat history.",
+
+                    "bot"
+
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   CLEAR MESSAGE
+====================================================== */
+
+function showClearedMessage() {
+
+    chatBody.innerHTML = `
+
+        <div class="msg msg-bot">
+
+            <div class="msg-avatar">
+                🤖
+            </div>
+
+            <div class="msg-bubble">
+
+                <p>
+                    <strong>
+                        Chat cleared!
+                    </strong>
+                </p>
+
+                <p>
+                    What would you like to learn?
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    const activeSubject =
+        document.querySelector(
+            ".subject-item.active"
+        );
+
+
+    const subject =
+        activeSubject
+            ? activeSubject.dataset.subject
+            : "General";
+
+
+    updateQuickPrompts(
+        subject
+    );
+
+}
+
+
+
+/* =====================================================
+   LOAD CHAT HISTORY
+====================================================== */
+
+async function loadChatHistory(
+    subject = "General"
+) {
+
+    const token =
+        localStorage.getItem("token");
+
+
+    if (!token) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+
+                API_BASE +
+                "/api/chats?subject=" +
+                encodeURIComponent(subject),
+
+                {
+
+                    method: "GET",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + token
+
+                    }
+
+                }
+
+            );
+
+
+        const data =
+            await readApiResponse(
+                response
+            );
+
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "token"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            response.ok &&
+            Array.isArray(data.chats) &&
+            data.chats.length > 0
+        ) {
+
+            chatBody.innerHTML =
+                "";
+
+
+            data.chats.forEach(
+                function (chat) {
+
+                    addMessage(
+                        chat.question,
+                        "user"
+                    );
+
+
+                    addMessage(
+                        chat.answer,
+                        "bot"
+                    );
+
+                }
+            );
+
+
+            if (quickPrompts) {
+
+                quickPrompts.style.display =
+                    "none";
+
+            }
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Chat history could not be loaded:",
+            error.message
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   VOICE RECOGNITION
+====================================================== */
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+
+let recognition =
+    null;
+
+
+let isListening =
+    false;
+
+
+
+if (SpeechRecognition) {
+
+    recognition =
+        new SpeechRecognition();
+
+
+    recognition.continuous =
+        false;
+
+
+    recognition.interimResults =
+        false;
+
+
+    recognition.maxAlternatives =
+        1;
+
+
+
+    /* ==========================================
+       VOICE START
+    =========================================== */
+
+    recognition.onstart =
+        function () {
+
+            isListening =
+                true;
+
+
+            if (micBtn) {
+
+                micBtn.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            if (listeningBar) {
+
+                listeningBar.classList.add(
+                    "show"
+                );
+
+            }
+
+
+            if (listeningText) {
+
+                listeningText.textContent =
+                    "Listening... speak your question";
+
+            }
+
+        };
+
+
+
+    /* ==========================================
+       VOICE RESULT
+    =========================================== */
+
+    recognition.onresult =
+        function (event) {
+
+            const transcript =
+                event.results[0][0]
+                    .transcript
+                    .trim();
+
+
+            console.log(
+                "Voice question:",
+                transcript
+            );
+
+
+            if (!transcript) {
+                return;
+            }
+
+
+            chatInput.value =
+                transcript;
+
+
+            sendMessage(
+                transcript
+            );
+
+        };
+
+
+
+    /* ==========================================
+       VOICE END
+    =========================================== */
+
+    recognition.onend =
+        function () {
+
+            isListening =
+                false;
+
+
+            if (micBtn) {
+
+                micBtn.classList.remove(
+                    "active"
+                );
+
+            }
+
+
+            if (listeningBar) {
+
+                listeningBar.classList.remove(
+                    "show"
+                );
+
+            }
+
+        };
+
+
+
+    /* ==========================================
+       VOICE ERROR
+    =========================================== */
+
+    recognition.onerror =
+        function (event) {
+
+            console.error(
+                "Voice recognition error:",
+                event.error
+            );
+
+
+            isListening =
+                false;
+
+
+            if (micBtn) {
+
+                micBtn.classList.remove(
+                    "active"
+                );
+
+            }
+
+
+            if (listeningBar) {
+
+                listeningBar.classList.remove(
+                    "show"
+                );
+
+            }
+
+
+            if (event.error === "not-allowed") {
+
+                alert(
+                    "Microphone permission was denied. Please allow microphone access in Chrome."
+                );
+
+            }
+
+            else if (
+                event.error === "no-speech"
+            ) {
+
+                console.log(
+                    "No speech detected."
+                );
+
+            }
+
+        };
+
+}
+
+
+
+/* =====================================================
+   MICROPHONE BUTTON
+====================================================== */
+
+if (micBtn) {
+
+    micBtn.addEventListener(
+        "click",
+        function () {
+
+
+            /* ======================================
+               BROWSER SUPPORT
+            ======================================= */
+
+            if (!recognition) {
+
+                alert(
+                    "Voice input is not supported in this browser. Please use Google Chrome."
+                );
+
+
+                return;
+
+            }
+
+
+            /* ======================================
+               STOP
+            ======================================= */
+
+            if (isListening) {
+
+                recognition.stop();
+
+                return;
+
+            }
+
+
+            /* ======================================
+               SELECT LANGUAGE
+            ======================================= */
+
+            const language =
+                selectedLanguage.textContent
+                    .trim();
+
+
+            if (language === "Hindi") {
+
+                recognition.lang =
+                    "hi-IN";
+
+            }
+
+            else if (
+                language === "Marathi"
+            ) {
+
+                recognition.lang =
+                    "mr-IN";
+
+            }
+
+            else {
+
+                recognition.lang =
+                    "en-IN";
+
+            }
+
+
+            try {
+
+                recognition.start();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Microphone start error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   INITIALIZE
+====================================================== */
+
+updateQuickPrompts(
+    "General"
+);
+
+
+loadChatHistory(
+    "General"
+);
+
+
+console.log(
+    "Gyaan AI Tutor loaded successfully."
+);
+
+
+</script>
+
+
+
+<!-- =====================================================
+     COMMON JS
+====================================================== -->
+
+<script src="/common.js"></script>
+
+
+</body>
+
+</html>
